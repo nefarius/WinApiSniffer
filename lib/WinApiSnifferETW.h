@@ -659,7 +659,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "Nefarius-Utilities-WinApiSniffer" event count 5
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 6
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
@@ -688,6 +688,8 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureWriteFile = {0x4, 0
 #define CaptureWriteFile_value 0x4
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureSetupDiEnumDeviceInterfaces = {0x5, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureSetupDiEnumDeviceInterfaces_value 0x5
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCloseHandle = {0x6, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureCloseHandle_value 0x6
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -939,6 +941,29 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureSetupDiEnumDeviceInterfaces _mcgen_PASTE2(McTemplateU0tqj_, MCGEN_EVENTWRITETRANSFER)
 
+//
+// Enablement check macro for event "CaptureCloseHandle"
+//
+#define EventEnabledCaptureCloseHandle() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureCloseHandle_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureCloseHandle"
+//
+#define EventWriteCaptureCloseHandle(Handle, Path) \
+        MCGEN_EVENT_ENABLED(CaptureCloseHandle) \
+        ? _mcgen_TEMPLATE_FOR_CaptureCloseHandle(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureCloseHandle, Handle, Path) : 0
+#define EventWriteCaptureCloseHandle_AssumeEnabled(Handle, Path) \
+        _mcgen_TEMPLATE_FOR_CaptureCloseHandle(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureCloseHandle, Handle, Path)
+#define EventWriteCaptureCloseHandle_ForContext(pContext, Handle, Path) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureCloseHandle) \
+        ? _mcgen_TEMPLATE_FOR_CaptureCloseHandle(&(pContext)->Context, &CaptureCloseHandle, Handle, Path) : 0
+#define EventWriteCaptureCloseHandle_ForContextAssumeEnabled(pContext, Handle, Path) \
+        _mcgen_TEMPLATE_FOR_CaptureCloseHandle(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureCloseHandle, Handle, Path)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureCloseHandle _mcgen_PASTE2(McTemplateU0ps_, MCGEN_EVENTWRITETRANSFER)
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //
@@ -951,6 +976,35 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 //
 // Template Functions
 //
+
+//
+// Function for template "TplCloseHandle" (and possibly others).
+// This function is for use by MC-generated code and should not be used directly.
+//
+#ifndef McTemplateU0ps_def
+#define McTemplateU0ps_def
+ETW_INLINE
+ULONG
+_mcgen_PASTE2(McTemplateU0ps_, MCGEN_EVENTWRITETRANSFER)(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_opt_ const void*  _Arg0,
+    _In_opt_ PCSTR  _Arg1
+    )
+{
+#define McTemplateU0ps_ARGCOUNT 2
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0ps_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const void*)  );
+
+    EventDataDescCreate(&EventData[2],
+                        (_Arg1 != NULL) ? _Arg1 : "NULL",
+                        (_Arg1 != NULL) ? (ULONG)((strlen(_Arg1) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0ps_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0ps_def
 
 //
 // Function for template "TplCreateFileA" (and possibly others).
@@ -1105,3 +1159,4 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_3_message 0xB0000003L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_4_message 0xB0000004L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_5_message 0xB0000005L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_6_message 0xB0000006L

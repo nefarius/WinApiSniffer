@@ -11,6 +11,7 @@ decltype(CreateFileA)* real_CreateFileA = CreateFileA;
 decltype(CreateFileW)* real_CreateFileW = CreateFileW;
 decltype(ReadFile)* real_ReadFile = ReadFile;
 decltype(WriteFile)* real_WriteFile = WriteFile;
+decltype(CloseHandle)* real_CloseHandle = CloseHandle;
 
 //
 // Hooks CreateFileA() API
@@ -217,6 +218,31 @@ BOOL WINAPI DetourWriteFile(
 	const std::string hexString = ss.str();
 
 	EventWriteCaptureWriteFile(ret, error, hFile, path.c_str(), nNumberOfBytesToWrite, tmpBytesWritten, hexString.c_str());
+
+	return ret;
+}
+
+BOOL DetourCloseHandle(
+	HANDLE hObject
+)
+{
+	const auto ret = real_CloseHandle(hObject);
+
+	std::string path = "Unknown";
+	if (g_handleToPath.count(hObject))
+	{
+		path = g_handleToPath[hObject];
+		g_handleToPath.erase(hObject);
+	}
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
+	else
+	{
+		// Ignore unknown handles
+		return ret;
+	}
+#endif
+
+	EventWriteCaptureCloseHandle(hObject, path.c_str());
 
 	return ret;
 }

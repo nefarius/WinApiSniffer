@@ -4,6 +4,7 @@ extern decltype(CreateFileA) *real_CreateFileA;
 extern decltype(CreateFileW) *real_CreateFileW;
 extern decltype(ReadFile)* real_ReadFile;
 extern decltype(WriteFile)* real_WriteFile;
+extern decltype(CloseHandle)* real_CloseHandle;
 
 HANDLE WINAPI DetourCreateFileA(
 	LPCSTR lpFileName,
@@ -39,4 +40,8 @@ BOOL WINAPI DetourWriteFile(
 	DWORD        nNumberOfBytesToWrite,
 	LPDWORD      lpNumberOfBytesWritten,
 	LPOVERLAPPED lpOverlapped
+);
+
+BOOL DetourCloseHandle(
+	HANDLE hObject
 );

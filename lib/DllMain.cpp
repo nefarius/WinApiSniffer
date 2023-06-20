@@ -120,33 +120,6 @@ BOOL WINAPI DetourReadFileEx(
 	return ret;
 }
 
-BOOL DetourCloseHandle(
-	HANDLE hObject
-)
-{
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("CloseHandle");
-
-	const auto ret = real_CloseHandle(hObject);
-
-	std::string path = "Unknown";
-	if (g_handleToPath.count(hObject))
-	{
-		path = g_handleToPath[hObject];
-		g_handleToPath.erase(hObject);
-	}
-#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
-	else
-	{
-		// Ignore unknown handles
-		return ret;
-	}
-#endif
-
-	_logger->info("handle = {}, path = {}", hObject, path);
-
-	return ret;
-}
-
 BOOL WINAPI DetourGetOverlappedResult(
 	HANDLE       hFile,
 	LPOVERLAPPED lpOverlapped,
