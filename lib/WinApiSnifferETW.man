@@ -10,7 +10,7 @@
 				<levels></levels>
 				<opcodes></opcodes>
 				<channels>
-					<channel name="WinApiCalls" chid="WinApiCalls" symbol="WinApiCalls" type="Analytic" enabled="false"></channel>
+					<channel name="WinApiCalls" chid="WinApiCalls" symbol="WinApiCalls" type="Analytic" enabled="true"></channel>
 				</channels>
 				<templates>
 					<template tid="tid_createfilea">
