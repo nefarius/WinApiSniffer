@@ -182,12 +182,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DetourDeviceIoControl.h" />
+    <ClInclude Include="DetourFileApi.h" />
     <ClInclude Include="WinApiSniffer.h" />
     <ClInclude Include="WinApiSnifferETW.h" />
     <ClInclude Include="XUSB.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DetourDeviceIoControl.cpp" />
+    <ClCompile Include="DetourFileApi.cpp" />
     <ClCompile Include="DllMain.cpp" />
   </ItemGroup>
   <ItemGroup>
