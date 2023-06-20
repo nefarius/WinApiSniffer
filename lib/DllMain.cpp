@@ -230,7 +230,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 	{
 	case DLL_PROCESS_ATTACH:
 		{
-			EventRegisterWinApiSniffer();
+			EventRegisterNefarius_Utilities_WinApiSniffer();
 
 			CHAR dllPath[MAX_PATH];
 
@@ -309,7 +309,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 	case DLL_PROCESS_DETACH:
 
-		EventUnregisterWinApiSniffer();
+		EventUnregisterNefarius_Utilities_WinApiSniffer();
 
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());

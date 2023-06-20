@@ -659,22 +659,28 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "WinApiSniffer" event count 2
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 2
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
-EXTERN_C __declspec(selectany) const GUID WINAPISNIFFER_EVENT_PROVIDER = {0xdad3e83e, 0x90de, 0x43ad, {0x94, 0xe5, 0x96, 0xa2, 0xb6, 0x8d, 0x84, 0xa5}};
+EXTERN_C __declspec(selectany) const GUID Nefarius_Utilities_WinApiSniffer = {0xdad3e83e, 0x90de, 0x43ad, {0x94, 0xe5, 0x96, 0xa2, 0xb6, 0x8d, 0x84, 0xa5}};
 
-#ifndef WINAPISNIFFER_EVENT_PROVIDER_Traits
-#define WINAPISNIFFER_EVENT_PROVIDER_Traits NULL
-#endif // WINAPISNIFFER_EVENT_PROVIDER_Traits
+#ifndef Nefarius_Utilities_WinApiSniffer_Traits
+#define Nefarius_Utilities_WinApiSniffer_Traits NULL
+#endif // Nefarius_Utilities_WinApiSniffer_Traits
+
+//
+// Channel
+//
+#define WinApiCalls 0x10
+#define WinApiCalls_KEYWORD 0x8000000000000000
 
 //
 // Event Descriptors
 //
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileA = {0x1, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileA = {0x1, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCreateFileA_value 0x1
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileW = {0x2, 0x0, 0x0, 0x4, 0x0, 0x0, 0x0};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileW = {0x2, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCreateFileW_value 0x2
 
 //
@@ -688,25 +694,25 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileW = {0x2,
 // Event Enablement Bits
 // These variables are for use by MC-generated code and should not be used directly.
 //
-EXTERN_C __declspec(selectany) DECLSPEC_CACHEALIGN ULONG WinApiSnifferEnableBits[1];
-EXTERN_C __declspec(selectany) const ULONGLONG WinApiSnifferKeywords[1] = {0x0};
-EXTERN_C __declspec(selectany) const unsigned char WinApiSnifferLevels[1] = {4};
+EXTERN_C __declspec(selectany) DECLSPEC_CACHEALIGN ULONG Nefarius_Utilities_WinApiSnifferEnableBits[1];
+EXTERN_C __declspec(selectany) const ULONGLONG Nefarius_Utilities_WinApiSnifferKeywords[1] = {0x8000000000000000};
+EXTERN_C __declspec(selectany) const unsigned char Nefarius_Utilities_WinApiSnifferLevels[1] = {4};
 
 //
 // Provider context
 //
-EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT WINAPISNIFFER_EVENT_PROVIDER_Context = {0, (ULONG_PTR)WINAPISNIFFER_EVENT_PROVIDER_Traits, 0, 0, 0, 0, 0, 0, 1, WinApiSnifferEnableBits, WinApiSnifferKeywords, WinApiSnifferLevels};
+EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT Nefarius_Utilities_WinApiSniffer_Context = {0, (ULONG_PTR)Nefarius_Utilities_WinApiSniffer_Traits, 0, 0, 0, 0, 0, 0, 1, Nefarius_Utilities_WinApiSnifferEnableBits, Nefarius_Utilities_WinApiSnifferKeywords, Nefarius_Utilities_WinApiSnifferLevels};
 
 //
 // Provider REGHANDLE
 //
-#define WinApiSnifferHandle (WINAPISNIFFER_EVENT_PROVIDER_Context.RegistrationHandle)
+#define Nefarius_Utilities_WinApiSnifferHandle (Nefarius_Utilities_WinApiSniffer_Context.RegistrationHandle)
 
 //
 // This macro is set to 0, indicating that the EventWrite[Name] macros do not
 // have an Activity parameter. This is controlled by the -km and -um options.
 //
-#define WINAPISNIFFER_EVENT_PROVIDER_EventWriteActivity 0
+#define Nefarius_Utilities_WinApiSniffer_EventWriteActivity 0
 
 //
 // Register with ETW using the control GUID specified in the manifest.
@@ -717,16 +723,16 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT WINAPISNIFFER_EVENT_PROVIDER_
 // returns an error, it is generally safe to use EventWrite and
 // EventUnregister macros (they will be no-ops if EventRegister failed).
 //
-#ifndef EventRegisterWinApiSniffer
-#define EventRegisterWinApiSniffer() McGenEventRegister(&WINAPISNIFFER_EVENT_PROVIDER, McGenControlCallbackV2, &WINAPISNIFFER_EVENT_PROVIDER_Context, &WinApiSnifferHandle)
+#ifndef EventRegisterNefarius_Utilities_WinApiSniffer
+#define EventRegisterNefarius_Utilities_WinApiSniffer() McGenEventRegister(&Nefarius_Utilities_WinApiSniffer, McGenControlCallbackV2, &Nefarius_Utilities_WinApiSniffer_Context, &Nefarius_Utilities_WinApiSnifferHandle)
 #endif
 
 //
 // Register with ETW using a specific control GUID (i.e. a GUID other than what
 // is specified in the manifest). Advanced scenarios only.
 //
-#ifndef EventRegisterByGuidWinApiSniffer
-#define EventRegisterByGuidWinApiSniffer(Guid) McGenEventRegister(&(Guid), McGenControlCallbackV2, &WINAPISNIFFER_EVENT_PROVIDER_Context, &WinApiSnifferHandle)
+#ifndef EventRegisterByGuidNefarius_Utilities_WinApiSniffer
+#define EventRegisterByGuidNefarius_Utilities_WinApiSniffer(Guid) McGenEventRegister(&(Guid), McGenControlCallbackV2, &Nefarius_Utilities_WinApiSniffer_Context, &Nefarius_Utilities_WinApiSnifferHandle)
 #endif
 
 //
@@ -737,8 +743,8 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT WINAPISNIFFER_EVENT_PROVIDER_
 // (not optional): failure to unregister a provider before DLL or driver unload
 // will result in crashes.
 //
-#ifndef EventUnregisterWinApiSniffer
-#define EventUnregisterWinApiSniffer() McGenEventUnregister(&WinApiSnifferHandle)
+#ifndef EventUnregisterNefarius_Utilities_WinApiSniffer
+#define EventUnregisterNefarius_Utilities_WinApiSniffer() McGenEventUnregister(&Nefarius_Utilities_WinApiSnifferHandle)
 #endif
 
 //
@@ -756,44 +762,44 @@ EXTERN_C __declspec(selectany) MCGEN_TRACE_CONTEXT WINAPISNIFFER_EVENT_PROVIDER_
 //
 // - Caller enables the feature before including this header, e.g.
 //   #define MCGEN_ENABLE_FORCONTEXT_CODE_GENERATION 1
-// - Caller allocates memory, e.g. pContext = malloc(sizeof(McGenContext_WinApiSniffer));
-// - Caller registers the provider, e.g. EventRegisterWinApiSniffer_ForContext(pContext);
+// - Caller allocates memory, e.g. pContext = malloc(sizeof(McGenContext_Nefarius_Utilities_WinApiSniffer));
+// - Caller registers the provider, e.g. EventRegisterNefarius_Utilities_WinApiSniffer_ForContext(pContext);
 // - Caller writes events, e.g. EventWriteMyEvent_ForContext(pContext, ...);
-// - Caller unregisters, e.g. EventUnregisterWinApiSniffer_ForContext(pContext);
+// - Caller unregisters, e.g. EventUnregisterNefarius_Utilities_WinApiSniffer_ForContext(pContext);
 // - Caller frees memory, e.g. free(pContext);
 //
 
-typedef struct tagMcGenContext_WinApiSniffer {
+typedef struct tagMcGenContext_Nefarius_Utilities_WinApiSniffer {
     // The fields of this structure are subject to change and should
     // not be accessed directly. To access the provider's REGHANDLE,
-    // use WinApiSnifferHandle_ForContext(pContext).
+    // use Nefarius_Utilities_WinApiSnifferHandle_ForContext(pContext).
     MCGEN_TRACE_CONTEXT Context;
     ULONG EnableBits[1];
-} McGenContext_WinApiSniffer;
+} McGenContext_Nefarius_Utilities_WinApiSniffer;
 
-#define EventRegisterWinApiSniffer_ForContext(pContext)             _mcgen_PASTE2(_mcgen_RegisterForContext_WinApiSniffer_, MCGEN_EVENTREGISTER)(&WINAPISNIFFER_EVENT_PROVIDER, pContext)
-#define EventRegisterByGuidWinApiSniffer_ForContext(Guid, pContext) _mcgen_PASTE2(_mcgen_RegisterForContext_WinApiSniffer_, MCGEN_EVENTREGISTER)(&(Guid), pContext)
-#define EventUnregisterWinApiSniffer_ForContext(pContext)           McGenEventUnregister(&(pContext)->Context.RegistrationHandle)
+#define EventRegisterNefarius_Utilities_WinApiSniffer_ForContext(pContext)             _mcgen_PASTE2(_mcgen_RegisterForContext_Nefarius_Utilities_WinApiSniffer_, MCGEN_EVENTREGISTER)(&Nefarius_Utilities_WinApiSniffer, pContext)
+#define EventRegisterByGuidNefarius_Utilities_WinApiSniffer_ForContext(Guid, pContext) _mcgen_PASTE2(_mcgen_RegisterForContext_Nefarius_Utilities_WinApiSniffer_, MCGEN_EVENTREGISTER)(&(Guid), pContext)
+#define EventUnregisterNefarius_Utilities_WinApiSniffer_ForContext(pContext)           McGenEventUnregister(&(pContext)->Context.RegistrationHandle)
 
 //
 // Provider REGHANDLE for caller-allocated context.
 //
-#define WinApiSnifferHandle_ForContext(pContext) ((pContext)->Context.RegistrationHandle)
+#define Nefarius_Utilities_WinApiSnifferHandle_ForContext(pContext) ((pContext)->Context.RegistrationHandle)
 
 // This function is for use by MC-generated code and should not be used directly.
 // Initialize and register the caller-allocated context.
 __inline
 ULONG __stdcall
-_mcgen_PASTE2(_mcgen_RegisterForContext_WinApiSniffer_, MCGEN_EVENTREGISTER)(
+_mcgen_PASTE2(_mcgen_RegisterForContext_Nefarius_Utilities_WinApiSniffer_, MCGEN_EVENTREGISTER)(
     _In_ LPCGUID pProviderId,
-    _Out_ McGenContext_WinApiSniffer* pContext)
+    _Out_ McGenContext_Nefarius_Utilities_WinApiSniffer* pContext)
 {
     RtlZeroMemory(pContext, sizeof(*pContext));
-    pContext->Context.Logger = (ULONG_PTR)WINAPISNIFFER_EVENT_PROVIDER_Traits;
+    pContext->Context.Logger = (ULONG_PTR)Nefarius_Utilities_WinApiSniffer_Traits;
     pContext->Context.EnableBitsCount = 1;
     pContext->Context.EnableBitMask = pContext->EnableBits;
-    pContext->Context.EnableKeyWords = WinApiSnifferKeywords;
-    pContext->Context.EnableLevel = WinApiSnifferLevels;
+    pContext->Context.EnableKeyWords = Nefarius_Utilities_WinApiSnifferKeywords;
+    pContext->Context.EnableLevel = Nefarius_Utilities_WinApiSnifferLevels;
     return McGenEventRegister(
         pProviderId,
         McGenControlCallbackV2,
@@ -804,8 +810,8 @@ _mcgen_PASTE2(_mcgen_RegisterForContext_WinApiSniffer_, MCGEN_EVENTREGISTER)(
 // This function is for use by MC-generated code and should not be used directly.
 // Trigger a compile error if called with the wrong parameter type.
 FORCEINLINE
-_Ret_ McGenContext_WinApiSniffer*
-_mcgen_CheckContextType_WinApiSniffer(_In_ McGenContext_WinApiSniffer* pContext)
+_Ret_ McGenContext_Nefarius_Utilities_WinApiSniffer*
+_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefarius_Utilities_WinApiSniffer* pContext)
 {
     return pContext;
 }
@@ -815,22 +821,22 @@ _mcgen_CheckContextType_WinApiSniffer(_In_ McGenContext_WinApiSniffer* pContext)
 //
 // Enablement check macro for event "CaptureCreateFileA"
 //
-#define EventEnabledCaptureCreateFileA() _mcgen_EVENT_BIT_SET(WinApiSnifferEnableBits, 0)
-#define EventEnabledCaptureCreateFileA_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_WinApiSniffer(pContext)->EnableBits, 0)
+#define EventEnabledCaptureCreateFileA() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureCreateFileA_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
 
 //
 // Event write macros for event "CaptureCreateFileA"
 //
 #define EventWriteCaptureCreateFileA(lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED(CaptureCreateFileA) \
-        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileA, lpFileName, Handle, Error) : 0
+        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureCreateFileA, lpFileName, Handle, Error) : 0
 #define EventWriteCaptureCreateFileA_AssumeEnabled(lpFileName, Handle, Error) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileA, lpFileName, Handle, Error)
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureCreateFileA, lpFileName, Handle, Error)
 #define EventWriteCaptureCreateFileA_ForContext(pContext, lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureCreateFileA) \
         ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&(pContext)->Context, &CaptureCreateFileA, lpFileName, Handle, Error) : 0
 #define EventWriteCaptureCreateFileA_ForContextAssumeEnabled(pContext, lpFileName, Handle, Error) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&_mcgen_CheckContextType_WinApiSniffer(pContext)->Context, &CaptureCreateFileA, lpFileName, Handle, Error)
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureCreateFileA, lpFileName, Handle, Error)
 
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureCreateFileA _mcgen_PASTE2(McTemplateU0spq_, MCGEN_EVENTWRITETRANSFER)
@@ -838,22 +844,22 @@ _mcgen_CheckContextType_WinApiSniffer(_In_ McGenContext_WinApiSniffer* pContext)
 //
 // Enablement check macro for event "CaptureCreateFileW"
 //
-#define EventEnabledCaptureCreateFileW() _mcgen_EVENT_BIT_SET(WinApiSnifferEnableBits, 0)
-#define EventEnabledCaptureCreateFileW_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_WinApiSniffer(pContext)->EnableBits, 0)
+#define EventEnabledCaptureCreateFileW() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureCreateFileW_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
 
 //
 // Event write macros for event "CaptureCreateFileW"
 //
 #define EventWriteCaptureCreateFileW(lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED(CaptureCreateFileW) \
-        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileW, lpFileName, Handle, Error) : 0
+        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureCreateFileW, lpFileName, Handle, Error) : 0
 #define EventWriteCaptureCreateFileW_AssumeEnabled(lpFileName, Handle, Error) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileW, lpFileName, Handle, Error)
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureCreateFileW, lpFileName, Handle, Error)
 #define EventWriteCaptureCreateFileW_ForContext(pContext, lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureCreateFileW) \
         ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&(pContext)->Context, &CaptureCreateFileW, lpFileName, Handle, Error) : 0
 #define EventWriteCaptureCreateFileW_ForContextAssumeEnabled(pContext, lpFileName, Handle, Error) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&_mcgen_CheckContextType_WinApiSniffer(pContext)->Context, &CaptureCreateFileW, lpFileName, Handle, Error)
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureCreateFileW, lpFileName, Handle, Error)
 
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureCreateFileW _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)
@@ -941,5 +947,7 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 }
 #endif
 
+#define MSG_opcode_Info                      0x30000000L
+#define MSG_level_Informational              0x50000004L
 #define MSG_CaptureCreateFileA_EventMessage  0xB0000001L
 #define MSG_CaptureCreateFileW_EventMessage  0xB0000002L
