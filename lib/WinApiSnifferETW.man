@@ -10,14 +10,14 @@
                 symbol="WINAPISNIFFER_EVENT_PROVIDER">
         <templates>
           <template tid="tid_createfilea">
-            <data inType="win:AnsiString" name="ScopeName" outType="win:Utf8"/>
-            <data inType="win:UnicodeString" name="FunctionName" outType="xs:string"/>
-            <data inType="win:Int32" name="HResult" outType="win:HResult"/>
+            <data inType="win:AnsiString" name="lpFileName" outType="win:Utf8"/>
+            <data inType="win:Pointer" name="Handle" outType="win:HexInt64"/>
+            <data inType="win:UInt32" name="Error" outType="win:Win32Error"/>
           </template>
           <template tid="tid_createfilew">
-            <data inType="win:AnsiString" name="ScopeName" outType="win:Utf8"/>
-            <data inType="win:UnicodeString" name="FunctionName" outType="xs:string"/>
-            <data inType="win:UInt32" name="Status" outType="win:NTSTATUS"/>
+            <data inType="win:UnicodeString" name="lpFileName" outType="xs:string"/>
+            <data inType="win:Pointer" name="Handle" outType="win:HexInt64"/>
+            <data inType="win:UInt32" name="Error" outType="win:Win32Error"/>
           </template>
         </templates>
         <events>

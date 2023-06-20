@@ -25,8 +25,7 @@ HANDLE WINAPI DetourCreateFileA(
 	HANDLE hTemplateFile
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("CreateFileA");
-	std::string path(lpFileName);
+	const std::string path(lpFileName);
 
 	const bool isOfInterest = (path.rfind("\\\\", 0) == 0);
 
@@ -57,12 +56,9 @@ HANDLE WINAPI DetourCreateFileA(
 		if (handle != INVALID_HANDLE_VALUE)
 		{
 			g_handleToPath[handle] = path;
-			_logger->info("handle = {}, lpFileName = {}", handle, path);
 		}
-		else
-		{
-			_logger->info("lpFileName = {}, lastError = {}", path, GetLastError());
-		}
+		
+		EventWriteCaptureCreateFileA(lpFileName, handle, GetLastError());
 	}
 
 	return handle;
@@ -81,8 +77,7 @@ HANDLE WINAPI DetourCreateFileW(
 	HANDLE hTemplateFile
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("CreateFileW");
-	std::string path(strconverter.to_bytes(lpFileName));
+	const std::string path(strconverter.to_bytes(lpFileName));
 
 	const bool isOfInterest = (path.rfind("\\\\", 0) == 0);
 
@@ -113,12 +108,9 @@ HANDLE WINAPI DetourCreateFileW(
 		if (handle != INVALID_HANDLE_VALUE)
 		{
 			g_handleToPath[handle] = path;
-			_logger->info("handle = {}, lpFileName = {}", handle, path);
-		}
-		else
-		{
-			_logger->info("lpFileName = {}, lastError = {}", path, GetLastError());
-		}
+		}		
+
+		EventWriteCaptureCreateFileW(lpFileName, handle, GetLastError());
 	}
 
 	return handle;

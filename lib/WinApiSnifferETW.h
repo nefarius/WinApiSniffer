@@ -821,19 +821,19 @@ _mcgen_CheckContextType_WinApiSniffer(_In_ McGenContext_WinApiSniffer* pContext)
 //
 // Event write macros for event "CaptureCreateFileA"
 //
-#define EventWriteCaptureCreateFileA(ScopeName, FunctionName, HResult) \
+#define EventWriteCaptureCreateFileA(lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED(CaptureCreateFileA) \
-        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileA, ScopeName, FunctionName, HResult) : 0
-#define EventWriteCaptureCreateFileA_AssumeEnabled(ScopeName, FunctionName, HResult) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileA, ScopeName, FunctionName, HResult)
-#define EventWriteCaptureCreateFileA_ForContext(pContext, ScopeName, FunctionName, HResult) \
+        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileA, lpFileName, Handle, Error) : 0
+#define EventWriteCaptureCreateFileA_AssumeEnabled(lpFileName, Handle, Error) \
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileA, lpFileName, Handle, Error)
+#define EventWriteCaptureCreateFileA_ForContext(pContext, lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureCreateFileA) \
-        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&(pContext)->Context, &CaptureCreateFileA, ScopeName, FunctionName, HResult) : 0
-#define EventWriteCaptureCreateFileA_ForContextAssumeEnabled(pContext, ScopeName, FunctionName, HResult) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&_mcgen_CheckContextType_WinApiSniffer(pContext)->Context, &CaptureCreateFileA, ScopeName, FunctionName, HResult)
+        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&(pContext)->Context, &CaptureCreateFileA, lpFileName, Handle, Error) : 0
+#define EventWriteCaptureCreateFileA_ForContextAssumeEnabled(pContext, lpFileName, Handle, Error) \
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileA(&_mcgen_CheckContextType_WinApiSniffer(pContext)->Context, &CaptureCreateFileA, lpFileName, Handle, Error)
 
 // This macro is for use by MC-generated code and should not be used directly.
-#define _mcgen_TEMPLATE_FOR_CaptureCreateFileA _mcgen_PASTE2(McTemplateU0szd_, MCGEN_EVENTWRITETRANSFER)
+#define _mcgen_TEMPLATE_FOR_CaptureCreateFileA _mcgen_PASTE2(McTemplateU0spq_, MCGEN_EVENTWRITETRANSFER)
 
 //
 // Enablement check macro for event "CaptureCreateFileW"
@@ -844,19 +844,19 @@ _mcgen_CheckContextType_WinApiSniffer(_In_ McGenContext_WinApiSniffer* pContext)
 //
 // Event write macros for event "CaptureCreateFileW"
 //
-#define EventWriteCaptureCreateFileW(ScopeName, FunctionName, Status) \
+#define EventWriteCaptureCreateFileW(lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED(CaptureCreateFileW) \
-        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileW, ScopeName, FunctionName, Status) : 0
-#define EventWriteCaptureCreateFileW_AssumeEnabled(ScopeName, FunctionName, Status) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileW, ScopeName, FunctionName, Status)
-#define EventWriteCaptureCreateFileW_ForContext(pContext, ScopeName, FunctionName, Status) \
+        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileW, lpFileName, Handle, Error) : 0
+#define EventWriteCaptureCreateFileW_AssumeEnabled(lpFileName, Handle, Error) \
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&WINAPISNIFFER_EVENT_PROVIDER_Context, &CaptureCreateFileW, lpFileName, Handle, Error)
+#define EventWriteCaptureCreateFileW_ForContext(pContext, lpFileName, Handle, Error) \
         MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureCreateFileW) \
-        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&(pContext)->Context, &CaptureCreateFileW, ScopeName, FunctionName, Status) : 0
-#define EventWriteCaptureCreateFileW_ForContextAssumeEnabled(pContext, ScopeName, FunctionName, Status) \
-        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&_mcgen_CheckContextType_WinApiSniffer(pContext)->Context, &CaptureCreateFileW, ScopeName, FunctionName, Status)
+        ? _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&(pContext)->Context, &CaptureCreateFileW, lpFileName, Handle, Error) : 0
+#define EventWriteCaptureCreateFileW_ForContextAssumeEnabled(pContext, lpFileName, Handle, Error) \
+        _mcgen_TEMPLATE_FOR_CaptureCreateFileW(&_mcgen_CheckContextType_WinApiSniffer(pContext)->Context, &CaptureCreateFileW, lpFileName, Handle, Error)
 
 // This macro is for use by MC-generated code and should not be used directly.
-#define _mcgen_TEMPLATE_FOR_CaptureCreateFileW _mcgen_PASTE2(McTemplateU0szq_, MCGEN_EVENTWRITETRANSFER)
+#define _mcgen_TEMPLATE_FOR_CaptureCreateFileW _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)
 
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
@@ -875,69 +875,65 @@ _mcgen_CheckContextType_WinApiSniffer(_In_ McGenContext_WinApiSniffer* pContext)
 // Function for template "tid_createfilea" (and possibly others).
 // This function is for use by MC-generated code and should not be used directly.
 //
-#ifndef McTemplateU0szd_def
-#define McTemplateU0szd_def
+#ifndef McTemplateU0spq_def
+#define McTemplateU0spq_def
 ETW_INLINE
 ULONG
-_mcgen_PASTE2(McTemplateU0szd_, MCGEN_EVENTWRITETRANSFER)(
+_mcgen_PASTE2(McTemplateU0spq_, MCGEN_EVENTWRITETRANSFER)(
     _In_ PMCGEN_TRACE_CONTEXT Context,
     _In_ PCEVENT_DESCRIPTOR Descriptor,
     _In_opt_ PCSTR  _Arg0,
-    _In_opt_ PCWSTR  _Arg1,
-    _In_ const signed int  _Arg2
+    _In_opt_ const void*  _Arg1,
+    _In_ const unsigned int  _Arg2
     )
 {
-#define McTemplateU0szd_ARGCOUNT 3
+#define McTemplateU0spq_ARGCOUNT 3
 
-    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0szd_ARGCOUNT + 1];
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0spq_ARGCOUNT + 1];
 
     EventDataDescCreate(&EventData[1],
                         (_Arg0 != NULL) ? _Arg0 : "NULL",
                         (_Arg0 != NULL) ? (ULONG)((strlen(_Arg0) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
 
-    EventDataDescCreate(&EventData[2],
-                        (_Arg1 != NULL) ? _Arg1 : L"NULL",
-                        (_Arg1 != NULL) ? (ULONG)((wcslen(_Arg1) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+    EventDataDescCreate(&EventData[2],&_Arg1, sizeof(const void*)  );
 
-    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const signed int)  );
+    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const unsigned int)  );
 
-    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0szd_ARGCOUNT + 1, EventData);
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0spq_ARGCOUNT + 1, EventData);
 }
-#endif // McTemplateU0szd_def
+#endif // McTemplateU0spq_def
 
 //
 // Function for template "tid_createfilew" (and possibly others).
 // This function is for use by MC-generated code and should not be used directly.
 //
-#ifndef McTemplateU0szq_def
-#define McTemplateU0szq_def
+#ifndef McTemplateU0zpq_def
+#define McTemplateU0zpq_def
 ETW_INLINE
 ULONG
-_mcgen_PASTE2(McTemplateU0szq_, MCGEN_EVENTWRITETRANSFER)(
+_mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
     _In_ PMCGEN_TRACE_CONTEXT Context,
     _In_ PCEVENT_DESCRIPTOR Descriptor,
-    _In_opt_ PCSTR  _Arg0,
-    _In_opt_ PCWSTR  _Arg1,
+    _In_opt_ PCWSTR  _Arg0,
+    _In_opt_ const void*  _Arg1,
     _In_ const unsigned int  _Arg2
     )
 {
-#define McTemplateU0szq_ARGCOUNT 3
+#define McTemplateU0zpq_ARGCOUNT 3
 
-    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0szq_ARGCOUNT + 1];
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0zpq_ARGCOUNT + 1];
 
     EventDataDescCreate(&EventData[1],
-                        (_Arg0 != NULL) ? _Arg0 : "NULL",
-                        (_Arg0 != NULL) ? (ULONG)((strlen(_Arg0) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+                        (_Arg0 != NULL) ? _Arg0 : L"NULL",
+                        (_Arg0 != NULL) ? (ULONG)((wcslen(_Arg0) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
 
-    EventDataDescCreate(&EventData[2],
-                        (_Arg1 != NULL) ? _Arg1 : L"NULL",
-                        (_Arg1 != NULL) ? (ULONG)((wcslen(_Arg1) + 1) * sizeof(WCHAR)) : (ULONG)sizeof(L"NULL"));
+    EventDataDescCreate(&EventData[2],&_Arg1, sizeof(const void*)  );
 
     EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const unsigned int)  );
 
-    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0szq_ARGCOUNT + 1, EventData);
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0zpq_ARGCOUNT + 1, EventData);
 }
-#endif // McTemplateU0szq_def
+#endif // McTemplateU0zpq_def
 
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
