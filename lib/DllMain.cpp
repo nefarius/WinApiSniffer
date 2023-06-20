@@ -36,7 +36,7 @@ void CALLBACK ReadFileExCallback(
 	LPOVERLAPPED lpOverlapped
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("ReadFileExCallback");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("ReadFileExCallback");
 
 	const auto completionParams = g_overlappedToRoutine[lpOverlapped];
 	const auto hFile = completionParams.hFile;
@@ -85,7 +85,7 @@ BOOL WINAPI DetourReadFileEx(
 	LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("ReadFileEx");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("ReadFileEx");
 
 	std::string path = "Unknown";
 	if (g_handleToPath.count(hFile))
@@ -127,7 +127,7 @@ BOOL WINAPI DetourGetOverlappedResult(
 	BOOL         bWait
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("GetOverlappedResult");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("GetOverlappedResult");
 	DWORD tmpBytesTransferred;
 
 	const auto ret = real_GetOverlappedResult(hFile, lpOverlapped, &tmpBytesTransferred, bWait);
@@ -185,8 +185,8 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 			g_dllDir = std::string(dllPath);
 
 			auto logger = spdlog::basic_logger_mt(
-				"WINAPISNIFFER",
-				g_dllDir + "\\WINAPISNIFFER.log"
+				"WinApiSniffer",
+				g_dllDir + "\\WinApiSniffer.log"
 			);
 
 #if _DEBUG
@@ -272,7 +272,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 		if (!g_newIoctls.empty())
 		{
-			std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("NewIoctls");
+			std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("NewIoctls");
 			_logger->info("New IOCTLs:");
 			for (auto ioctl : g_newIoctls)
 			{

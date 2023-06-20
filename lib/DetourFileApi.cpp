@@ -182,7 +182,7 @@ BOOL WINAPI DetourWriteFile(
 	LPOVERLAPPED lpOverlapped
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("WriteFile");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("WriteFile");
 
 	const PUCHAR charInBuf = PUCHAR(lpBuffer);
 	DWORD tmpBytesWritten;
