@@ -1,4 +1,4 @@
-#include "WinApiSniffer.h"
+#include "WINAPISNIFFER.h"
 #include "DetourDeviceIoControl.h"
 #include "DetourFileApi.h"
 
@@ -39,7 +39,7 @@ BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 	PSP_DEVICE_INTERFACE_DATA DeviceInterfaceData
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("SetupDiEnumDeviceInterfaces");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("SetupDiEnumDeviceInterfaces");
 
 	const auto retval = real_SetupDiEnumDeviceInterfaces(DeviceInfoSet, DeviceInfoData, InterfaceClassGuid, MemberIndex,
 	                                                     DeviceInterfaceData);
@@ -63,7 +63,7 @@ void CALLBACK ReadFileExCallback(
 	LPOVERLAPPED lpOverlapped
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("ReadFileExCallback");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("ReadFileExCallback");
 
 	const auto completionParams = g_overlappedToRoutine[lpOverlapped];
 	const auto hFile = completionParams.hFile;
@@ -77,7 +77,7 @@ void CALLBACK ReadFileExCallback(
 	{
 		path = g_handleToPath[hFile];
 	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
 	else
 	{
 		// Ignore unknown handles
@@ -112,14 +112,14 @@ BOOL WINAPI DetourReadFileEx(
 	LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("ReadFileEx");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("ReadFileEx");
 
 	std::string path = "Unknown";
 	if (g_handleToPath.count(hFile))
 	{
 		path = g_handleToPath[hFile];
 	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
 	else
 	{
 		// Ignore unknown handles
@@ -151,7 +151,7 @@ BOOL DetourCloseHandle(
 	HANDLE hObject
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("CloseHandle");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("CloseHandle");
 
 	const auto ret = real_CloseHandle(hObject);
 
@@ -161,7 +161,7 @@ BOOL DetourCloseHandle(
 		path = g_handleToPath[hObject];
 		g_handleToPath.erase(hObject);
 	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
 	else
 	{
 		// Ignore unknown handles
@@ -181,7 +181,7 @@ BOOL WINAPI DetourGetOverlappedResult(
 	BOOL         bWait
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("GetOverlappedResult");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("GetOverlappedResult");
 	DWORD tmpBytesTransferred;
 
 	const auto ret = real_GetOverlappedResult(hFile, lpOverlapped, &tmpBytesTransferred, bWait);
@@ -195,7 +195,7 @@ BOOL WINAPI DetourGetOverlappedResult(
 	{
 		path = g_handleToPath[hFile];
 	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
 	else
 	{
 		// Ignore unknown handles
@@ -230,7 +230,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 	{
 	case DLL_PROCESS_ATTACH:
 		{
-			EventRegisterNefarius_Utilities_WinApiSniffer();
+			EventRegisterNefarius_Utilities_WINAPISNIFFER();
 
 			CHAR dllPath[MAX_PATH];
 
@@ -239,8 +239,8 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 			g_dllDir = std::string(dllPath);
 
 			auto logger = spdlog::basic_logger_mt(
-				"WinApiSniffer",
-				g_dllDir + "\\WinApiSniffer.log"
+				"WINAPISNIFFER",
+				g_dllDir + "\\WINAPISNIFFER.log"
 			);
 
 #if _DEBUG
@@ -309,7 +309,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 	case DLL_PROCESS_DETACH:
 
-		EventUnregisterNefarius_Utilities_WinApiSniffer();
+		EventUnregisterNefarius_Utilities_WINAPISNIFFER();
 
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
@@ -326,7 +326,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 		if (!g_newIoctls.empty())
 		{
-			std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("NewIoctls");
+			std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("NewIoctls");
 			_logger->info("New IOCTLs:");
 			for (auto ioctl : g_newIoctls)
 			{

@@ -1,4 +1,4 @@
-#include "WinApiSniffer.h"
+#include "WINAPISNIFFER.h"
 #include "DetourFileApi.h"
 
 extern std::list<std::string> g_driveStrings;
@@ -7,8 +7,8 @@ extern std::map<HANDLE, std::string> g_handleToPath;
 using convert_t = std::codecvt_utf8<wchar_t>;
 static std::wstring_convert<convert_t, wchar_t> strconverter;
 
-decltype(CreateFileA) *real_CreateFileA = CreateFileA;
-decltype(CreateFileW) *real_CreateFileW = CreateFileW;
+decltype(CreateFileA)* real_CreateFileA = CreateFileA;
+decltype(CreateFileW)* real_CreateFileW = CreateFileW;
 decltype(ReadFile)* real_ReadFile = ReadFile;
 decltype(WriteFile)* real_WriteFile = WriteFile;
 
@@ -39,6 +39,8 @@ HANDLE WINAPI DetourCreateFileA(
 		hTemplateFile
 	);
 
+	const auto error = GetLastError();
+
 	if (isOfInterest)
 	{
 		// Verify that this is not a regular file path
@@ -57,8 +59,8 @@ HANDLE WINAPI DetourCreateFileA(
 		{
 			g_handleToPath[handle] = path;
 		}
-		
-		EventWriteCaptureCreateFileA(lpFileName, handle, GetLastError());
+
+		EventWriteCaptureCreateFileA(lpFileName, handle, error);
 	}
 
 	return handle;
@@ -91,6 +93,8 @@ HANDLE WINAPI DetourCreateFileW(
 		hTemplateFile
 	);
 
+	const auto error = GetLastError();
+
 	if (isOfInterest)
 	{
 		// Verify that this is not a regular file path
@@ -108,9 +112,9 @@ HANDLE WINAPI DetourCreateFileW(
 		if (handle != INVALID_HANDLE_VALUE)
 		{
 			g_handleToPath[handle] = path;
-		}		
+		}
 
-		EventWriteCaptureCreateFileW(lpFileName, handle, GetLastError());
+		EventWriteCaptureCreateFileW(lpFileName, handle, error);
 	}
 
 	return handle;
@@ -127,23 +131,23 @@ BOOL WINAPI DetourReadFile(
 	LPOVERLAPPED lpOverlapped
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("ReadFile");
-
 	const PUCHAR charInBuf = PUCHAR(lpBuffer);
 	DWORD tmpBytesRead;
 
-	const auto ret =  real_ReadFile(hFile, lpBuffer, nNumberOfBytesToRead, &tmpBytesRead, lpOverlapped);
+	const auto ret = real_ReadFile(hFile, lpBuffer, nNumberOfBytesToRead, &tmpBytesRead, lpOverlapped);
 	const auto error = GetLastError();
 
 	if (lpNumberOfBytesRead)
+	{
 		*lpNumberOfBytesRead = tmpBytesRead;
+	}
 
 	std::string path = "Unknown";
 	if (g_handleToPath.count(hFile))
 	{
 		path = g_handleToPath[hFile];
 	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
 	else
 	{
 		// Ignore unknown handles
@@ -154,14 +158,14 @@ BOOL WINAPI DetourReadFile(
 	const auto bufSize = std::min(nNumberOfBytesToRead, tmpBytesRead);
 	const std::vector<char> outBuffer(charInBuf, charInBuf + bufSize);
 
-	_logger->info("success = {}, lastError = 0x{:08X}, path = {} bytesToRead: {:04d}, bytesRead: {:04d} -> {:Xpn}",
-		ret ? "true" : "false",
-		ret ? ERROR_SUCCESS : error,
-		path,
-		nNumberOfBytesToRead,
-		tmpBytesRead,
-		spdlog::to_hex(outBuffer)
-	);
+	std::ostringstream ss;
+
+	ss << std::hex << std::uppercase << std::setfill('0');
+	std::for_each(outBuffer.cbegin(), outBuffer.cend(), [&](int c) { ss << std::setw(2) << c << " "; });
+
+	const std::string hexString = ss.str();
+
+	EventWriteCaptureReadFile(ret, error, hFile, path.c_str(), nNumberOfBytesToRead, tmpBytesRead, hexString.c_str());
 
 	return ret;
 }
@@ -177,23 +181,25 @@ BOOL WINAPI DetourWriteFile(
 	LPOVERLAPPED lpOverlapped
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("WriteFile");
+	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("WriteFile");
 
 	const PUCHAR charInBuf = PUCHAR(lpBuffer);
 	DWORD tmpBytesWritten;
-	
-	const auto ret =  real_WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, &tmpBytesWritten, lpOverlapped);
+
+	const auto ret = real_WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, &tmpBytesWritten, lpOverlapped);
 	const auto error = GetLastError();
 
 	if (lpNumberOfBytesWritten)
+	{
 		*lpNumberOfBytesWritten = tmpBytesWritten;
+	}
 
 	std::string path = "Unknown";
 	if (g_handleToPath.count(hFile))
 	{
 		path = g_handleToPath[hFile];
 	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
+#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
 	else
 	{
 		// Ignore unknown handles
@@ -202,21 +208,15 @@ BOOL WINAPI DetourWriteFile(
 #endif
 
 	const std::vector<char> inBuffer(charInBuf, charInBuf + nNumberOfBytesToWrite);
-	
-	// Prevent the logger from causing a crash via exception when it double-detours WriteFile
-	try
-	{
-		_logger->info("success = {}, lastError = 0x{:08X}, path = {}, bytesToWrite: {:04d}, bytesWritten: {:04d} -> {:Xpn}",
-			ret ? "true" : "false",
-			ret ? ERROR_SUCCESS : error,
-			path,
-			nNumberOfBytesToWrite,
-			tmpBytesWritten,
-			spdlog::to_hex(inBuffer)
-		);
-	}
-	catch (...)
-	{ }
+
+	std::ostringstream ss;
+
+	ss << std::hex << std::uppercase << std::setfill('0');
+	std::for_each(inBuffer.cbegin(), inBuffer.cend(), [&](int c) { ss << std::setw(2) << c << " "; });
+
+	const std::string hexString = ss.str();
+
+	EventWriteCaptureWriteFile(ret, error, hFile, path.c_str(), nNumberOfBytesToWrite, tmpBytesWritten, hexString.c_str());
 
 	return ret;
 }

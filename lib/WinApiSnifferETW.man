@@ -6,6 +6,8 @@
 				<events>
 					<event symbol="CaptureCreateFileA" value="1" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCreateFileA" message="$(string.CaptureCreateFileA.EventMessage)"></event>
 					<event symbol="CaptureCreateFileW" value="2" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TpCreateFileW" message="$(string.CaptureCreateFileW.EventMessage)"></event>
+					<event symbol="CaptureReadFile" value="3" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplReadFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.3.message)"></event>
+					<event symbol="CaptureWriteFile" value="4" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplWriteFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.4.message)"></event>
 				</events>
 				<levels></levels>
 				<opcodes></opcodes>
@@ -14,7 +16,7 @@
 				</channels>
 				<templates>
 					<template tid="TplCreateFileA">
-						<data name="lpFileName" inType="win:AnsiString" outType="win:Utf8"></data>
+						<data name="lpFileName" inType="win:AnsiString" outType="xs:string"></data>
 						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
 						<data name="Error" inType="win:UInt32" outType="win:Win32Error"></data>
 					</template>
@@ -22,6 +24,24 @@
 						<data name="lpFileName" inType="win:UnicodeString" outType="xs:string"></data>
 						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
 						<data name="Error" inType="win:UInt32" outType="win:Win32Error"></data>
+					</template>
+					<template tid="TplReadFile">
+						<data name="Success" inType="win:Boolean" outType="xs:boolean"></data>
+						<data name="LastError" inType="win:UInt32" outType="win:Win32Error"></data>
+						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
+						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="BytesToRead" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="BytesRead" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="HexContent" inType="win:AnsiString" outType="xs:string"></data>
+					</template>
+					<template tid="TplWriteFile">
+						<data name="Success" inType="win:Boolean" outType="xs:boolean"></data>
+						<data name="LastError" inType="win:UInt32" outType="win:Win32Error"></data>
+						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
+						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="BytesToWrite" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="BytesWritten" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="HexContent" inType="win:AnsiString" outType="xs:string"></data>
 					</template>
 				</templates>
 			</provider>
@@ -32,6 +52,8 @@
 			<stringTable>
 				<string id="opcode.Info" value="Info"></string>
 				<string id="level.Informational" value="Information"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.4.message" value="WriteFile [HANDLE: %2] path -&gt; %1, error: %3"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.3.message" value="ReadFile [HANDLE: %2] path -&gt; %1, error: %3"></string>
 				<string id="CaptureCreateFileW.EventMessage" value="CreateFileW [HANDLE: %2] path -&gt; %1, error: %3"></string>
 				<string id="CaptureCreateFileA.EventMessage" value="CreateFileA [HANDLE: %2] path -&gt; %1, error: %3"></string>
 			</stringTable>

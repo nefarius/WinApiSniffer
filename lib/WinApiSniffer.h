@@ -16,13 +16,18 @@
 //
 // STL
 // 
-#include <string>
+#include <algorithm>
 #include <codecvt>
+#include <fstream>
+#include <iostream>
+#include <iterator>
+#include <list>
 #include <locale>
 #include <map>
-#include <list>
-#include <iostream>
-#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <iomanip>
 
 //
 // JSON

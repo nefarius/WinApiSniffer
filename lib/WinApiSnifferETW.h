@@ -659,7 +659,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "Nefarius-Utilities-WinApiSniffer" event count 2
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 4
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
@@ -682,6 +682,10 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileA = {0x1,
 #define CaptureCreateFileA_value 0x1
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileW = {0x2, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCreateFileW_value 0x2
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureReadFile = {0x3, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureReadFile_value 0x3
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureWriteFile = {0x4, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureWriteFile_value 0x4
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -864,6 +868,52 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureCreateFileW _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)
 
+//
+// Enablement check macro for event "CaptureReadFile"
+//
+#define EventEnabledCaptureReadFile() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureReadFile_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureReadFile"
+//
+#define EventWriteCaptureReadFile(Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent) \
+        MCGEN_EVENT_ENABLED(CaptureReadFile) \
+        ? _mcgen_TEMPLATE_FOR_CaptureReadFile(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureReadFile, Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent) : 0
+#define EventWriteCaptureReadFile_AssumeEnabled(Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent) \
+        _mcgen_TEMPLATE_FOR_CaptureReadFile(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureReadFile, Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent)
+#define EventWriteCaptureReadFile_ForContext(pContext, Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureReadFile) \
+        ? _mcgen_TEMPLATE_FOR_CaptureReadFile(&(pContext)->Context, &CaptureReadFile, Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent) : 0
+#define EventWriteCaptureReadFile_ForContextAssumeEnabled(pContext, Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent) \
+        _mcgen_TEMPLATE_FOR_CaptureReadFile(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureReadFile, Success, LastError, Handle, Path, BytesToRead, BytesRead, HexContent)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureReadFile _mcgen_PASTE2(McTemplateU0tqpsqqs_, MCGEN_EVENTWRITETRANSFER)
+
+//
+// Enablement check macro for event "CaptureWriteFile"
+//
+#define EventEnabledCaptureWriteFile() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureWriteFile_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureWriteFile"
+//
+#define EventWriteCaptureWriteFile(Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent) \
+        MCGEN_EVENT_ENABLED(CaptureWriteFile) \
+        ? _mcgen_TEMPLATE_FOR_CaptureWriteFile(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureWriteFile, Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent) : 0
+#define EventWriteCaptureWriteFile_AssumeEnabled(Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent) \
+        _mcgen_TEMPLATE_FOR_CaptureWriteFile(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureWriteFile, Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent)
+#define EventWriteCaptureWriteFile_ForContext(pContext, Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureWriteFile) \
+        ? _mcgen_TEMPLATE_FOR_CaptureWriteFile(&(pContext)->Context, &CaptureWriteFile, Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent) : 0
+#define EventWriteCaptureWriteFile_ForContextAssumeEnabled(pContext, Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent) \
+        _mcgen_TEMPLATE_FOR_CaptureWriteFile(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureWriteFile, Success, LastError, Handle, Path, BytesToWrite, BytesWritten, HexContent)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureWriteFile _mcgen_PASTE2(McTemplateU0tqpsqqs_, MCGEN_EVENTWRITETRANSFER)
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //
@@ -910,6 +960,52 @@ _mcgen_PASTE2(McTemplateU0spq_, MCGEN_EVENTWRITETRANSFER)(
 #endif // McTemplateU0spq_def
 
 //
+// Function for template "TplReadFile" (and possibly others).
+// This function is for use by MC-generated code and should not be used directly.
+//
+#ifndef McTemplateU0tqpsqqs_def
+#define McTemplateU0tqpsqqs_def
+ETW_INLINE
+ULONG
+_mcgen_PASTE2(McTemplateU0tqpsqqs_, MCGEN_EVENTWRITETRANSFER)(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_ const signed int  _Arg0,
+    _In_ const unsigned int  _Arg1,
+    _In_opt_ const void*  _Arg2,
+    _In_opt_ PCSTR  _Arg3,
+    _In_ const unsigned int  _Arg4,
+    _In_ const unsigned int  _Arg5,
+    _In_opt_ PCSTR  _Arg6
+    )
+{
+#define McTemplateU0tqpsqqs_ARGCOUNT 7
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0tqpsqqs_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const signed int)  );
+
+    EventDataDescCreate(&EventData[2],&_Arg1, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const void*)  );
+
+    EventDataDescCreate(&EventData[4],
+                        (_Arg3 != NULL) ? _Arg3 : "NULL",
+                        (_Arg3 != NULL) ? (ULONG)((strlen(_Arg3) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[5],&_Arg4, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[6],&_Arg5, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[7],
+                        (_Arg6 != NULL) ? _Arg6 : "NULL",
+                        (_Arg6 != NULL) ? (ULONG)((strlen(_Arg6) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0tqpsqqs_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0tqpsqqs_def
+
+//
 // Function for template "TpCreateFileW" (and possibly others).
 // This function is for use by MC-generated code and should not be used directly.
 //
@@ -951,3 +1047,5 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 #define MSG_level_Informational              0x50000004L
 #define MSG_CaptureCreateFileA_EventMessage  0xB0000001L
 #define MSG_CaptureCreateFileW_EventMessage  0xB0000002L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_3_message 0xB0000003L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_4_message 0xB0000004L
