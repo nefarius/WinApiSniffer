@@ -9,6 +9,10 @@
       <Command>mc -um "$(ProjectDir)WinApiSnifferETW.man"</Command>
       <Message>Compiling ETW manifest</Message>
     </PreBuildEvent>
+	<PostBuildEvent>
+      <Command>copy "$(ProjectDir)WinApiSnifferETW.man" "$(OutDir)WinApiSnifferETW.man"</Command>
+      <Message>Copying ETW manifest</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
