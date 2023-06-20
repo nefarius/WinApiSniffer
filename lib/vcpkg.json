@@ -7,7 +7,6 @@
   "dependencies": [
     "spdlog",
     "detours",
-    "jsoncpp",
-    "nlohmann-json"
+    "jsoncpp"
   ]
 }
