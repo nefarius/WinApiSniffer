@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<instrumentationManifest xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.microsoft.com/win/2004/08/events eventman.xsd">
+  <instrumentation>
+    <events>
+      <provider
+                guid="{dad3e83e-90de-43ad-94e5-96a2b68d84a5}"
+                messageFileName="WinApiSniffer.dll"
+                name="WinApiSniffer"
+                resourceFileName="WinApiSniffer.dll"
+                symbol="WINAPISNIFFER_EVENT_PROVIDER">
+        <templates>
+          <template tid="tid_createfilea">
+            <data inType="win:AnsiString" name="ScopeName" outType="win:Utf8"/>
+            <data inType="win:UnicodeString" name="FunctionName" outType="xs:string"/>
+            <data inType="win:Int32" name="HResult" outType="win:HResult"/>
+          </template>
+          <template tid="tid_createfilew">
+            <data inType="win:AnsiString" name="ScopeName" outType="win:Utf8"/>
+            <data inType="win:UnicodeString" name="FunctionName" outType="xs:string"/>
+            <data inType="win:UInt32" name="Status" outType="win:NTSTATUS"/>
+          </template>
+        </templates>
+        <events>
+          <event value="1" level="win:Informational" message="$(string.CaptureCreateFileA.EventMessage)" opcode="win:Info" symbol="CaptureCreateFileA" template="tid_createfilea"/>
+          <event value="2" level="win:Informational" message="$(string.CaptureCreateFileW.EventMessage)" opcode="win:Info" symbol="CaptureCreateFileW" template="tid_createfilew"/>
+        </events>
+      </provider>
+    </events>
+  </instrumentation>
+  <localization xmlns="http://schemas.microsoft.com/win/2004/08/events">
+    <resources culture="en-US">
+      <stringTable>
+        <string id="CaptureCreateFileA.EventMessage" value="[%1] %2 failed with HRESULT %3"/>
+        <string id="CaptureCreateFileW.EventMessage" value="[%1] %2 failed with NTSTATUS %3"/>
+      </stringTable>
+    </resources>
+  </localization>
+</instrumentationManifest>
