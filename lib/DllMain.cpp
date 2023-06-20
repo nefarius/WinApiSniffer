@@ -1,6 +1,7 @@
 #include "WINAPISNIFFER.h"
 #include "DetourDeviceIoControl.h"
 #include "DetourFileApi.h"
+#include "DetourSetupApi.h"
 
 
 using convert_t = std::codecvt_utf8<wchar_t>;
@@ -16,7 +17,6 @@ struct ReadFileExDetourParams
 	LPOVERLAPPED_COMPLETION_ROUTINE lpCompletionRoutine;
 };
 
-static decltype(SetupDiEnumDeviceInterfaces) *real_SetupDiEnumDeviceInterfaces = SetupDiEnumDeviceInterfaces;
 static decltype(ReadFileEx)* real_ReadFileEx = ReadFileEx;
 static decltype(CloseHandle)* real_CloseHandle = CloseHandle;
 static decltype(GetOverlappedResult)* real_GetOverlappedResult = GetOverlappedResult;
@@ -28,34 +28,7 @@ std::map<DWORD, std::string> g_ioctlMap;
 std::map<DWORD, bool> g_newIoctls;
 
 
-//
-// Hooks SetupDiEnumDeviceInterfaces() API
-// 
-BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
-	HDEVINFO DeviceInfoSet,
-	PSP_DEVINFO_DATA DeviceInfoData,
-	const GUID* InterfaceClassGuid,
-	DWORD MemberIndex,
-	PSP_DEVICE_INTERFACE_DATA DeviceInterfaceData
-)
-{
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WINAPISNIFFER")->clone("SetupDiEnumDeviceInterfaces");
 
-	const auto retval = real_SetupDiEnumDeviceInterfaces(DeviceInfoSet, DeviceInfoData, InterfaceClassGuid, MemberIndex,
-	                                                     DeviceInterfaceData);
-
-	_logger->info("InterfaceClassGuid = {{{:08X}-{:04X}-{:04X}-{:02X}{:02X}-{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}}}, "
-	              "success = {}, error = 0x{:08X}",
-	              InterfaceClassGuid->Data1, InterfaceClassGuid->Data2, InterfaceClassGuid->Data3,
-	              InterfaceClassGuid->Data4[0], InterfaceClassGuid->Data4[1], InterfaceClassGuid->Data4[2],
-	              InterfaceClassGuid->Data4[3],
-	              InterfaceClassGuid->Data4[4], InterfaceClassGuid->Data4[5], InterfaceClassGuid->Data4[6],
-	              InterfaceClassGuid->Data4[7],
-	              retval ? "true" : "false",
-				  retval ? ERROR_SUCCESS : GetLastError());
-
-	return retval;
-}
 
 void CALLBACK ReadFileExCallback(
 	DWORD dwErrorCode,
@@ -230,7 +203,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 	{
 	case DLL_PROCESS_ATTACH:
 		{
-			EventRegisterNefarius_Utilities_WINAPISNIFFER();
+			EventRegisterNefarius_Utilities_WinApiSniffer();
 
 			CHAR dllPath[MAX_PATH];
 
@@ -309,7 +282,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 	case DLL_PROCESS_DETACH:
 
-		EventUnregisterNefarius_Utilities_WINAPISNIFFER();
+		EventUnregisterNefarius_Utilities_WinApiSniffer();
 
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());

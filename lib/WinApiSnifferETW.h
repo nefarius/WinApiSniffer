@@ -659,7 +659,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "Nefarius-Utilities-WinApiSniffer" event count 4
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 5
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
@@ -686,6 +686,8 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureReadFile = {0x3, 0x
 #define CaptureReadFile_value 0x3
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureWriteFile = {0x4, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureWriteFile_value 0x4
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureSetupDiEnumDeviceInterfaces = {0x5, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureSetupDiEnumDeviceInterfaces_value 0x5
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -914,6 +916,29 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureWriteFile _mcgen_PASTE2(McTemplateU0tqpsqqs_, MCGEN_EVENTWRITETRANSFER)
 
+//
+// Enablement check macro for event "CaptureSetupDiEnumDeviceInterfaces"
+//
+#define EventEnabledCaptureSetupDiEnumDeviceInterfaces() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureSetupDiEnumDeviceInterfaces_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureSetupDiEnumDeviceInterfaces"
+//
+#define EventWriteCaptureSetupDiEnumDeviceInterfaces(Success, LastError, InterfaceClassGuid) \
+        MCGEN_EVENT_ENABLED(CaptureSetupDiEnumDeviceInterfaces) \
+        ? _mcgen_TEMPLATE_FOR_CaptureSetupDiEnumDeviceInterfaces(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureSetupDiEnumDeviceInterfaces, Success, LastError, InterfaceClassGuid) : 0
+#define EventWriteCaptureSetupDiEnumDeviceInterfaces_AssumeEnabled(Success, LastError, InterfaceClassGuid) \
+        _mcgen_TEMPLATE_FOR_CaptureSetupDiEnumDeviceInterfaces(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureSetupDiEnumDeviceInterfaces, Success, LastError, InterfaceClassGuid)
+#define EventWriteCaptureSetupDiEnumDeviceInterfaces_ForContext(pContext, Success, LastError, InterfaceClassGuid) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureSetupDiEnumDeviceInterfaces) \
+        ? _mcgen_TEMPLATE_FOR_CaptureSetupDiEnumDeviceInterfaces(&(pContext)->Context, &CaptureSetupDiEnumDeviceInterfaces, Success, LastError, InterfaceClassGuid) : 0
+#define EventWriteCaptureSetupDiEnumDeviceInterfaces_ForContextAssumeEnabled(pContext, Success, LastError, InterfaceClassGuid) \
+        _mcgen_TEMPLATE_FOR_CaptureSetupDiEnumDeviceInterfaces(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureSetupDiEnumDeviceInterfaces, Success, LastError, InterfaceClassGuid)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureSetupDiEnumDeviceInterfaces _mcgen_PASTE2(McTemplateU0tqj_, MCGEN_EVENTWRITETRANSFER)
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //
@@ -958,6 +983,36 @@ _mcgen_PASTE2(McTemplateU0spq_, MCGEN_EVENTWRITETRANSFER)(
     return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0spq_ARGCOUNT + 1, EventData);
 }
 #endif // McTemplateU0spq_def
+
+//
+// Function for template "TplSetupDiEnumDeviceInterfaces" (and possibly others).
+// This function is for use by MC-generated code and should not be used directly.
+//
+#ifndef McTemplateU0tqj_def
+#define McTemplateU0tqj_def
+ETW_INLINE
+ULONG
+_mcgen_PASTE2(McTemplateU0tqj_, MCGEN_EVENTWRITETRANSFER)(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_ const signed int  _Arg0,
+    _In_ const unsigned int  _Arg1,
+    _In_ const GUID*  _Arg2
+    )
+{
+#define McTemplateU0tqj_ARGCOUNT 3
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0tqj_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const signed int)  );
+
+    EventDataDescCreate(&EventData[2],&_Arg1, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[3],_Arg2, sizeof(GUID)  );
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0tqj_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0tqj_def
 
 //
 // Function for template "TplReadFile" (and possibly others).
@@ -1049,3 +1104,4 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 #define MSG_CaptureCreateFileW_EventMessage  0xB0000002L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_3_message 0xB0000003L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_4_message 0xB0000004L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_5_message 0xB0000005L
