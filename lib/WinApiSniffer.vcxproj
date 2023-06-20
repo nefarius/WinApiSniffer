@@ -181,12 +181,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="DetourDeviceIoControl.h" />
     <ClInclude Include="WinApiSniffer.h" />
     <ClInclude Include="WinApiSnifferETW.h" />
     <ClInclude Include="XUSB.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="DetourDeviceIoControl.cpp" />
+    <ClCompile Include="DllMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ioctls.json">

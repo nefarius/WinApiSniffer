@@ -1,5 +1,6 @@
 
 #include "WinApiSniffer.h"
+#include "DetourDeviceIoControl.h"
 
 
 using convert_t = std::codecvt_utf8<wchar_t>;
@@ -16,7 +17,7 @@ struct ReadFileExDetourParams
 };
 
 static decltype(SetupDiEnumDeviceInterfaces) *real_SetupDiEnumDeviceInterfaces = SetupDiEnumDeviceInterfaces;
-static decltype(DeviceIoControl) *real_DeviceIoControl = DeviceIoControl;
+
 static decltype(CreateFileA) *real_CreateFileA = CreateFileA;
 static decltype(CreateFileW) *real_CreateFileW = CreateFileW;
 static decltype(ReadFile)* real_ReadFile = ReadFile;
@@ -26,10 +27,10 @@ static decltype(CloseHandle)* real_CloseHandle = CloseHandle;
 static decltype(GetOverlappedResult)* real_GetOverlappedResult = GetOverlappedResult;
 
 static std::list<std::string> g_driveStrings;
-static std::map<HANDLE, std::string> g_handleToPath;
+std::map<HANDLE, std::string> g_handleToPath;
 static std::map<LPOVERLAPPED, ReadFileExDetourParams> g_overlappedToRoutine;
-static std::map<DWORD, std::string> g_ioctlMap;
-static std::map<DWORD, bool> g_newIoctls;
+std::map<DWORD, std::string> g_ioctlMap;
+std::map<DWORD, bool> g_newIoctls;
 
 
 //
@@ -434,107 +435,7 @@ BOOL WINAPI DetourGetOverlappedResult(
 	return ret;
 }
 
-//
-// Hooks DeviceIoControl() API
-// 
-BOOL WINAPI DetourDeviceIoControl(
-	HANDLE hDevice,
-	DWORD dwIoControlCode,
-	LPVOID lpInBuffer,
-	DWORD nInBufferSize,
-	LPVOID lpOutBuffer,
-	DWORD nOutBufferSize,
-	LPDWORD lpBytesReturned,
-	LPOVERLAPPED lpOverlapped
-)
-{
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("DeviceIoControl");
 
-	const PUCHAR charInBuf = static_cast<PUCHAR>(lpInBuffer);
-	const std::vector<char> inBuffer(charInBuf, charInBuf + nInBufferSize);
-
-	DWORD tmpBytesReturned;
-
-	const auto retval = real_DeviceIoControl(
-		hDevice,
-		dwIoControlCode,
-		lpInBuffer,
-		nInBufferSize,
-		lpOutBuffer,
-		nOutBufferSize,
-		&tmpBytesReturned, // might be null, use our own variable
-		lpOverlapped
-	);
-
-	if (lpBytesReturned)
-		*lpBytesReturned = tmpBytesReturned;
-
-	std::string path = "Unknown";
-	if (g_handleToPath.count(hDevice))
-	{
-		path = g_handleToPath[hDevice];
-	}
-#ifndef WinApiSniffer_LOG_UNKNOWN_HANDLES
-	else
-	{
-		// Ignore unknown handles
-		return retval;
-	}
-#endif
-
-	if (g_ioctlMap.count(dwIoControlCode))
-	{
-		_logger->info("[I] [{}] path = {} ({:04d}) -> {:Xpn}",
-		              g_ioctlMap[dwIoControlCode],
-		              path,
-		              nInBufferSize,
-		              spdlog::to_hex(inBuffer)
-		);
-	}
-	else
-	{
-		// Add control code to list of unknown codes
-		g_newIoctls[dwIoControlCode] = true;
-#ifdef WinApiSniffer_LOG_UNKNOWN_IOCTLS
-		_logger->info("[I] [0x{:08X}] path = {} ({:04d}) -> {:Xpn}",
-		              dwIoControlCode,
-		              path,
-		              nInBufferSize,
-		              spdlog::to_hex(inBuffer)
-		);
-#endif
-	}
-
-	if (lpOutBuffer && nOutBufferSize > 0)
-	{
-		const PUCHAR charOutBuf = static_cast<PUCHAR>(lpOutBuffer);
-		const auto bufSize = std::min(nOutBufferSize, tmpBytesReturned);
-		const std::vector<char> outBuffer(charOutBuf, charOutBuf + bufSize);
-
-		if (g_ioctlMap.count(dwIoControlCode))
-		{
-			_logger->info("[O] [{}] path = {} ({:04d}) -> {:Xpn}",
-			              g_ioctlMap[dwIoControlCode],
-			              path,
-			              bufSize,
-			              spdlog::to_hex(outBuffer)
-			);
-		}
-#ifdef WinApiSniffer_LOG_UNKNOWN_IOCTLS
-		else
-		{
-			_logger->info("[O] [0x{:08X}] path = {} ({:04d}) -> {:Xpn}",
-			              dwIoControlCode,
-			              path,
-			              bufSize,
-			              spdlog::to_hex(outBuffer)
-			);
-		}
-#endif
-	}
-
-	return retval;
-}
 
 
 EXTERN_C IMAGE_DOS_HEADER __ImageBase;
@@ -551,6 +452,8 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 	{
 	case DLL_PROCESS_ATTACH:
 		{
+			EventRegisterWinApiSniffer();
+
 			CHAR dllPath[MAX_PATH];
 
 			GetModuleFileNameA((HINSTANCE)&__ImageBase, dllPath, MAX_PATH);
@@ -627,6 +530,9 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		break;
 
 	case DLL_PROCESS_DETACH:
+
+		EventUnregisterWinApiSniffer();
+
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
 		DetourDetach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
