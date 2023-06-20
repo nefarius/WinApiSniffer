@@ -659,7 +659,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "Nefarius-Utilities-WinApiSniffer" event count 7
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 8
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
@@ -692,6 +692,8 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCloseHandle = {0x6,
 #define CaptureCloseHandle_value 0x6
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureGetOverlappedResult = {0x7, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureGetOverlappedResult_value 0x7
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDeviceIoControl = {0x8, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureDeviceIoControl_value 0x8
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -989,6 +991,29 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureGetOverlappedResult _mcgen_PASTE2(McTemplateU0tqqps_, MCGEN_EVENTWRITETRANSFER)
 
+//
+// Enablement check macro for event "CaptureDeviceIoControl"
+//
+#define EventEnabledCaptureDeviceIoControl() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureDeviceIoControl_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureDeviceIoControl"
+//
+#define EventWriteCaptureDeviceIoControl(IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer) \
+        MCGEN_EVENT_ENABLED(CaptureDeviceIoControl) \
+        ? _mcgen_TEMPLATE_FOR_CaptureDeviceIoControl(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureDeviceIoControl, IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer) : 0
+#define EventWriteCaptureDeviceIoControl_AssumeEnabled(IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer) \
+        _mcgen_TEMPLATE_FOR_CaptureDeviceIoControl(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureDeviceIoControl, IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer)
+#define EventWriteCaptureDeviceIoControl_ForContext(pContext, IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureDeviceIoControl) \
+        ? _mcgen_TEMPLATE_FOR_CaptureDeviceIoControl(&(pContext)->Context, &CaptureDeviceIoControl, IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer) : 0
+#define EventWriteCaptureDeviceIoControl_ForContextAssumeEnabled(pContext, IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer) \
+        _mcgen_TEMPLATE_FOR_CaptureDeviceIoControl(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureDeviceIoControl, IoControlCode, IoControlCodeName, Success, LastError, Path, InBufferSize, InBuffer, OutBufferSize, OutBuffer)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureDeviceIoControl _mcgen_PASTE2(McTemplateU0qstqsqsqs_, MCGEN_EVENTWRITETRANSFER)
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //
@@ -1030,6 +1055,62 @@ _mcgen_PASTE2(McTemplateU0ps_, MCGEN_EVENTWRITETRANSFER)(
     return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0ps_ARGCOUNT + 1, EventData);
 }
 #endif // McTemplateU0ps_def
+
+//
+// Function for template "TplDeviceIoControl" (and possibly others).
+// This function is for use by MC-generated code and should not be used directly.
+//
+#ifndef McTemplateU0qstqsqsqs_def
+#define McTemplateU0qstqsqsqs_def
+ETW_INLINE
+ULONG
+_mcgen_PASTE2(McTemplateU0qstqsqsqs_, MCGEN_EVENTWRITETRANSFER)(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_ const unsigned int  _Arg0,
+    _In_opt_ PCSTR  _Arg1,
+    _In_ const signed int  _Arg2,
+    _In_ const unsigned int  _Arg3,
+    _In_opt_ PCSTR  _Arg4,
+    _In_ const unsigned int  _Arg5,
+    _In_opt_ PCSTR  _Arg6,
+    _In_ const unsigned int  _Arg7,
+    _In_opt_ PCSTR  _Arg8
+    )
+{
+#define McTemplateU0qstqsqsqs_ARGCOUNT 9
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0qstqsqsqs_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[2],
+                        (_Arg1 != NULL) ? _Arg1 : "NULL",
+                        (_Arg1 != NULL) ? (ULONG)((strlen(_Arg1) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const signed int)  );
+
+    EventDataDescCreate(&EventData[4],&_Arg3, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[5],
+                        (_Arg4 != NULL) ? _Arg4 : "NULL",
+                        (_Arg4 != NULL) ? (ULONG)((strlen(_Arg4) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[6],&_Arg5, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[7],
+                        (_Arg6 != NULL) ? _Arg6 : "NULL",
+                        (_Arg6 != NULL) ? (ULONG)((strlen(_Arg6) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[8],&_Arg7, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[9],
+                        (_Arg8 != NULL) ? _Arg8 : "NULL",
+                        (_Arg8 != NULL) ? (ULONG)((strlen(_Arg8) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0qstqsqsqs_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0qstqsqsqs_def
 
 //
 // Function for template "TplCreateFileA" (and possibly others).
@@ -1224,3 +1305,4 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_5_message 0xB0000005L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_6_message 0xB0000006L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_7_message 0xB0000007L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_8_message 0xB0000008L

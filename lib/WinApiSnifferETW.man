@@ -11,6 +11,7 @@
 					<event symbol="CaptureSetupDiEnumDeviceInterfaces" value="5" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplSetupDiEnumDeviceInterfaces" message="$(string.Nefarius-Utilities-WinApiSniffer.event.5.message)"></event>
 					<event symbol="CaptureCloseHandle" value="6" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCloseHandle" message="$(string.Nefarius-Utilities-WinApiSniffer.event.6.message)"></event>
 					<event symbol="CaptureGetOverlappedResult" value="7" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplGetOverlappedResult" message="$(string.Nefarius-Utilities-WinApiSniffer.event.7.message)"></event>
+					<event symbol="CaptureDeviceIoControl" value="8" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplDeviceIoControl" message="$(string.Nefarius-Utilities-WinApiSniffer.event.8.message)"></event>
 				</events>
 				<levels></levels>
 				<opcodes></opcodes>
@@ -62,6 +63,17 @@
 						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
 						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
 					</template>
+					<template tid="TplDeviceIoControl">
+						<data name="IoControlCode" inType="win:UInt32" outType="xs:unsignedInt"></data>
+            <data name="IoControlCodeName" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="Success" inType="win:Boolean" outType="xs:boolean"></data>
+						<data name="LastError" inType="win:UInt32" outType="win:Win32Error"></data>
+						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="InBufferSize" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="InBuffer" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="OutBufferSize" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="OutBuffer" inType="win:AnsiString" outType="xs:string"></data>
+          </template>
 				</templates>
 			</provider>
 		</events>
@@ -71,6 +83,7 @@
 			<stringTable>
 				<string id="opcode.Info" value="Info"></string>
 				<string id="level.Informational" value="Information"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.8.message" value="%1"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.7.message" value="%1, %2, %3, %4"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.6.message" value="CloseHandle 1% %2"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.5.message" value="SetupDiEnumDeviceInterfaces %1, %2, %3"></string>

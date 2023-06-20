@@ -22,8 +22,6 @@ BOOL WINAPI DetourDeviceIoControl(
 	LPOVERLAPPED lpOverlapped
 )
 {
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("DeviceIoControl");
-
 	const PUCHAR charInBuf = static_cast<PUCHAR>(lpInBuffer);
 	const std::vector<char> inBuffer(charInBuf, charInBuf + nInBufferSize);
 
@@ -40,8 +38,12 @@ BOOL WINAPI DetourDeviceIoControl(
 		lpOverlapped
 	);
 
+	const auto error = GetLastError();
+
 	if (lpBytesReturned)
+	{
 		*lpBytesReturned = tmpBytesReturned;
+	}
 
 	std::string path = "Unknown";
 	if (g_handleToPath.count(hDevice))
@@ -56,28 +58,13 @@ BOOL WINAPI DetourDeviceIoControl(
 	}
 #endif
 
-	if (g_ioctlMap.count(dwIoControlCode))
-	{
-		_logger->info("[I] [{}] path = {} ({:04d}) -> {:Xpn}",
-			g_ioctlMap[dwIoControlCode],
-			path,
-			nInBufferSize,
-			spdlog::to_hex(inBuffer)
-		);
-	}
-	else
-	{
-		// Add control code to list of unknown codes
-		g_newIoctls[dwIoControlCode] = true;
-#ifdef WINAPISNIFFER_LOG_UNKNOWN_IOCTLS
-		_logger->info("[I] [0x{:08X}] path = {} ({:04d}) -> {:Xpn}",
-			dwIoControlCode,
-			path,
-			nInBufferSize,
-			spdlog::to_hex(inBuffer)
-		);
-#endif
-	}
+	std::ostringstream inSs, outSs;
+
+	inSs << std::hex << std::uppercase << std::setfill('0');
+	outSs << std::hex << std::uppercase << std::setfill('0');
+	std::for_each(inBuffer.cbegin(), inBuffer.cend(), [&](int c) { inSs << std::setw(2) << c << " "; });
+
+	const std::string inBufferHexString = inSs.str();
 
 	if (lpOutBuffer && nOutBufferSize > 0)
 	{
@@ -85,27 +72,24 @@ BOOL WINAPI DetourDeviceIoControl(
 		const auto bufSize = std::min(nOutBufferSize, tmpBytesReturned);
 		const std::vector<char> outBuffer(charOutBuf, charOutBuf + bufSize);
 
-		if (g_ioctlMap.count(dwIoControlCode))
-		{
-			_logger->info("[O] [{}] path = {} ({:04d}) -> {:Xpn}",
-				g_ioctlMap[dwIoControlCode],
-				path,
-				bufSize,
-				spdlog::to_hex(outBuffer)
-			);
-		}
-#ifdef WinApiSniffer_LOG_UNKNOWN_IOCTLS
-		else
-		{
-			_logger->info("[O] [0x{:08X}] path = {} ({:04d}) -> {:Xpn}",
-				dwIoControlCode,
-				path,
-				bufSize,
-				spdlog::to_hex(outBuffer)
-			);
-		}
-#endif
+		std::for_each(outBuffer.cbegin(), outBuffer.cend(), [&](int c) { outSs << std::setw(2) << c << " "; });
 	}
+
+	const std::string outBufferHexString = outSs.str();
+
+	std::string ioctlName = g_ioctlMap.count(dwIoControlCode) ? g_ioctlMap[dwIoControlCode] : "Unknown";
+
+	EventWriteCaptureDeviceIoControl(
+		dwIoControlCode,
+		ioctlName.c_str(), 
+		retval, 
+		error, 
+		path.c_str(), 
+		nInBufferSize,
+		inBufferHexString.c_str(),
+		nOutBufferSize, 
+		outBufferHexString.c_str()
+	);
 
 	return retval;
 }
@@ -141,6 +125,6 @@ BOOL WINAPI DetourGetOverlappedResult(
 #endif
 
 	EventWriteCaptureGetOverlappedResult(ret, error, tmpBytesTransferred, hFile, path.c_str());
-	
+
 	return ret;
 }
