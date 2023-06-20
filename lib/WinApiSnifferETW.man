@@ -30,8 +30,8 @@
   <localization xmlns="http://schemas.microsoft.com/win/2004/08/events">
     <resources culture="en-US">
       <stringTable>
-        <string id="CaptureCreateFileA.EventMessage" value="[%1] %2 failed with HRESULT %3"/>
-        <string id="CaptureCreateFileW.EventMessage" value="[%1] %2 failed with NTSTATUS %3"/>
+        <string id="CaptureCreateFileA.EventMessage" value="CreateFileA [HANDLE: %2] path -> %1, error: %3"/>
+        <string id="CaptureCreateFileW.EventMessage" value="CreateFileW [HANDLE: %2] path -> %1, error: %3"/>
       </stringTable>
     </resources>
   </localization>
