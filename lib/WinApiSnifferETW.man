@@ -4,8 +4,8 @@
 		<events>
 			<provider name="Nefarius-Utilities-WinApiSniffer" guid="{DAD3E83E-90DE-43AD-94E5-96A2B68D84A5}" symbol="Nefarius_Utilities_WinApiSniffer" resourceFileName="WinApiSniffer.dll" messageFileName="WinApiSniffer.dll">
 				<events>
-					<event symbol="CaptureCreateFileA" value="1" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="tid_createfilea" message="$(string.CaptureCreateFileA.EventMessage)"></event>
-					<event symbol="CaptureCreateFileW" value="2" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="tid_createfilew" message="$(string.CaptureCreateFileW.EventMessage)"></event>
+					<event symbol="CaptureCreateFileA" value="1" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCreateFileA" message="$(string.CaptureCreateFileA.EventMessage)"></event>
+					<event symbol="CaptureCreateFileW" value="2" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TpCreateFileW" message="$(string.CaptureCreateFileW.EventMessage)"></event>
 				</events>
 				<levels></levels>
 				<opcodes></opcodes>
@@ -13,12 +13,12 @@
 					<channel name="WinApiCalls" chid="WinApiCalls" symbol="WinApiCalls" type="Analytic" enabled="true"></channel>
 				</channels>
 				<templates>
-					<template tid="tid_createfilea">
+					<template tid="TplCreateFileA">
 						<data name="lpFileName" inType="win:AnsiString" outType="win:Utf8"></data>
 						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
 						<data name="Error" inType="win:UInt32" outType="win:Win32Error"></data>
 					</template>
-					<template tid="tid_createfilew">
+					<template tid="TpCreateFileW">
 						<data name="lpFileName" inType="win:UnicodeString" outType="xs:string"></data>
 						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
 						<data name="Error" inType="win:UInt32" outType="win:Win32Error"></data>

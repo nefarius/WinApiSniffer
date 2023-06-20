@@ -878,7 +878,7 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 //
 
 //
-// Function for template "tid_createfilea" (and possibly others).
+// Function for template "TplCreateFileA" (and possibly others).
 // This function is for use by MC-generated code and should not be used directly.
 //
 #ifndef McTemplateU0spq_def
@@ -910,7 +910,7 @@ _mcgen_PASTE2(McTemplateU0spq_, MCGEN_EVENTWRITETRANSFER)(
 #endif // McTemplateU0spq_def
 
 //
-// Function for template "tid_createfilew" (and possibly others).
+// Function for template "TpCreateFileW" (and possibly others).
 // This function is for use by MC-generated code and should not be used directly.
 //
 #ifndef McTemplateU0zpq_def
