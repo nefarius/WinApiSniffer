@@ -245,3 +245,4 @@ ModelManifest.xml
 .fake/
 **/vcpkg_installed
 /lib/*.bin
+/lib/*.etl

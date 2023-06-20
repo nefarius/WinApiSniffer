@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0" Author="Microsoft Corporation" Copyright="Microsoft Corporation" Company="Microsoft Corporation">
+  <Profiles>
+    <EventCollector Id="EventCollector" Name="Event Collector">
+      <BufferSize Value="64" />
+      <Buffers Value="4" />
+    </EventCollector>
+
+    <EventProvider Id="EventProvider_FredEmmott.OpenXRTracing" Name="dad3e83e-90de-43ad-94e5-96a2b68d84a5" />
+
+    <Profile Id="FredEmmott.OpenXRTracing.Verbose.File" Name="FredEmmott.OpenXRTracing" Description="FredEmmott.OpenXRTracing" LoggingMode="File" DetailLevel="Verbose" Default="true">
+      <Collectors>
+        <EventCollectorId Value="EventCollector">
+          <EventProviders>
+            <EventProviderId Value="EventProvider_FredEmmott.OpenXRTracing" />
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>
