@@ -133,7 +133,7 @@ BOOL WINAPI DetourReadFile(
 )
 {
 	const PUCHAR charInBuf = PUCHAR(lpBuffer);
-	DWORD tmpBytesRead;
+	DWORD tmpBytesRead = 0;
 
 	const auto ret = real_ReadFile(hFile, lpBuffer, nNumberOfBytesToRead, &tmpBytesRead, lpOverlapped);
 	const auto error = GetLastError();
@@ -185,7 +185,7 @@ BOOL WINAPI DetourWriteFile(
 	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("WriteFile");
 
 	const PUCHAR charInBuf = PUCHAR(lpBuffer);
-	DWORD tmpBytesWritten;
+	DWORD tmpBytesWritten = 0;
 
 	const auto ret = real_WriteFile(hFile, lpBuffer, nNumberOfBytesToWrite, &tmpBytesWritten, lpOverlapped);
 	const auto error = GetLastError();

@@ -1,6 +1,7 @@
 #pragma once
 
-extern decltype(DeviceIoControl) *real_DeviceIoControl;
+extern decltype(DeviceIoControl)* real_DeviceIoControl;
+extern decltype(GetOverlappedResult)* real_GetOverlappedResult;
 
 BOOL WINAPI DetourDeviceIoControl(
 	HANDLE hDevice,
@@ -11,4 +12,11 @@ BOOL WINAPI DetourDeviceIoControl(
 	DWORD nOutBufferSize,
 	LPDWORD lpBytesReturned,
 	LPOVERLAPPED lpOverlapped
+);
+
+BOOL WINAPI DetourGetOverlappedResult(
+	HANDLE       hFile,
+	LPOVERLAPPED lpOverlapped,
+	LPDWORD      lpNumberOfBytesTransferred,
+	BOOL         bWait
 );

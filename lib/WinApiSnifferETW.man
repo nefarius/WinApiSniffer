@@ -10,6 +10,7 @@
 					<event symbol="CaptureWriteFile" value="4" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplWriteFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.4.message)"></event>
 					<event symbol="CaptureSetupDiEnumDeviceInterfaces" value="5" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplSetupDiEnumDeviceInterfaces" message="$(string.Nefarius-Utilities-WinApiSniffer.event.5.message)"></event>
 					<event symbol="CaptureCloseHandle" value="6" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCloseHandle" message="$(string.Nefarius-Utilities-WinApiSniffer.event.6.message)"></event>
+					<event symbol="CaptureGetOverlappedResult" value="7" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplGetOverlappedResult" message="$(string.Nefarius-Utilities-WinApiSniffer.event.7.message)"></event>
 				</events>
 				<levels></levels>
 				<opcodes></opcodes>
@@ -54,6 +55,13 @@
 						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
 						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
 					</template>
+					<template tid="TplGetOverlappedResult">
+						<data name="Success" inType="win:Boolean" outType="xs:boolean"></data>
+						<data name="LastError" inType="win:UInt32" outType="win:Win32Error"></data>
+						<data name="BytesTransferred" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="Handle" inType="win:Pointer" outType="win:HexInt64"></data>
+						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
+					</template>
 				</templates>
 			</provider>
 		</events>
@@ -63,6 +71,7 @@
 			<stringTable>
 				<string id="opcode.Info" value="Info"></string>
 				<string id="level.Informational" value="Information"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.7.message" value="%1, %2, %3, %4"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.6.message" value="CloseHandle 1% %2"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.5.message" value="SetupDiEnumDeviceInterfaces %1, %2, %3"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.4.message" value="WriteFile [HANDLE: %2] path -&gt; %1, error: %3"></string>

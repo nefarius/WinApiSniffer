@@ -659,7 +659,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "Nefarius-Utilities-WinApiSniffer" event count 6
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 7
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
@@ -690,6 +690,8 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureSetupDiEnumDeviceIn
 #define CaptureSetupDiEnumDeviceInterfaces_value 0x5
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCloseHandle = {0x6, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCloseHandle_value 0x6
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureGetOverlappedResult = {0x7, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureGetOverlappedResult_value 0x7
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -964,6 +966,29 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureCloseHandle _mcgen_PASTE2(McTemplateU0ps_, MCGEN_EVENTWRITETRANSFER)
 
+//
+// Enablement check macro for event "CaptureGetOverlappedResult"
+//
+#define EventEnabledCaptureGetOverlappedResult() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureGetOverlappedResult_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureGetOverlappedResult"
+//
+#define EventWriteCaptureGetOverlappedResult(Success, LastError, BytesTransferred, Handle, Path) \
+        MCGEN_EVENT_ENABLED(CaptureGetOverlappedResult) \
+        ? _mcgen_TEMPLATE_FOR_CaptureGetOverlappedResult(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureGetOverlappedResult, Success, LastError, BytesTransferred, Handle, Path) : 0
+#define EventWriteCaptureGetOverlappedResult_AssumeEnabled(Success, LastError, BytesTransferred, Handle, Path) \
+        _mcgen_TEMPLATE_FOR_CaptureGetOverlappedResult(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureGetOverlappedResult, Success, LastError, BytesTransferred, Handle, Path)
+#define EventWriteCaptureGetOverlappedResult_ForContext(pContext, Success, LastError, BytesTransferred, Handle, Path) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureGetOverlappedResult) \
+        ? _mcgen_TEMPLATE_FOR_CaptureGetOverlappedResult(&(pContext)->Context, &CaptureGetOverlappedResult, Success, LastError, BytesTransferred, Handle, Path) : 0
+#define EventWriteCaptureGetOverlappedResult_ForContextAssumeEnabled(pContext, Success, LastError, BytesTransferred, Handle, Path) \
+        _mcgen_TEMPLATE_FOR_CaptureGetOverlappedResult(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureGetOverlappedResult, Success, LastError, BytesTransferred, Handle, Path)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureGetOverlappedResult _mcgen_PASTE2(McTemplateU0tqqps_, MCGEN_EVENTWRITETRANSFER)
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //
@@ -1115,6 +1140,44 @@ _mcgen_PASTE2(McTemplateU0tqpsqqs_, MCGEN_EVENTWRITETRANSFER)(
 #endif // McTemplateU0tqpsqqs_def
 
 //
+// Function for template "TplGetOverlappedResult" (and possibly others).
+// This function is for use by MC-generated code and should not be used directly.
+//
+#ifndef McTemplateU0tqqps_def
+#define McTemplateU0tqqps_def
+ETW_INLINE
+ULONG
+_mcgen_PASTE2(McTemplateU0tqqps_, MCGEN_EVENTWRITETRANSFER)(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_ const signed int  _Arg0,
+    _In_ const unsigned int  _Arg1,
+    _In_ const unsigned int  _Arg2,
+    _In_opt_ const void*  _Arg3,
+    _In_opt_ PCSTR  _Arg4
+    )
+{
+#define McTemplateU0tqqps_ARGCOUNT 5
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0tqqps_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const signed int)  );
+
+    EventDataDescCreate(&EventData[2],&_Arg1, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[3],&_Arg2, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[4],&_Arg3, sizeof(const void*)  );
+
+    EventDataDescCreate(&EventData[5],
+                        (_Arg4 != NULL) ? _Arg4 : "NULL",
+                        (_Arg4 != NULL) ? (ULONG)((strlen(_Arg4) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0tqqps_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0tqqps_def
+
+//
 // Function for template "TpCreateFileW" (and possibly others).
 // This function is for use by MC-generated code and should not be used directly.
 //
@@ -1160,3 +1223,4 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_4_message 0xB0000004L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_5_message 0xB0000005L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_6_message 0xB0000006L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_7_message 0xB0000007L

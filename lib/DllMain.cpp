@@ -19,7 +19,7 @@ struct ReadFileExDetourParams
 
 static decltype(ReadFileEx)* real_ReadFileEx = ReadFileEx;
 static decltype(CloseHandle)* real_CloseHandle = CloseHandle;
-static decltype(GetOverlappedResult)* real_GetOverlappedResult = GetOverlappedResult;
+
 
 std::list<std::string> g_driveStrings;
 std::map<HANDLE, std::string> g_handleToPath;
@@ -119,46 +119,6 @@ BOOL WINAPI DetourReadFileEx(
 
 	return ret;
 }
-
-BOOL WINAPI DetourGetOverlappedResult(
-	HANDLE       hFile,
-	LPOVERLAPPED lpOverlapped,
-	LPDWORD      lpNumberOfBytesTransferred,
-	BOOL         bWait
-)
-{
-	const std::shared_ptr<spdlog::logger> _logger = spdlog::get("WinApiSniffer")->clone("GetOverlappedResult");
-	DWORD tmpBytesTransferred;
-
-	const auto ret = real_GetOverlappedResult(hFile, lpOverlapped, &tmpBytesTransferred, bWait);
-	const auto error = GetLastError();
-
-	if (lpNumberOfBytesTransferred)
-		*lpNumberOfBytesTransferred = tmpBytesTransferred;
-	
-	std::string path = "Unknown";
-	if (g_handleToPath.count(hFile))
-	{
-		path = g_handleToPath[hFile];
-	}
-#ifndef WINAPISNIFFER_LOG_UNKNOWN_HANDLES
-	else
-	{
-		// Ignore unknown handles
-		return ret;
-	}
-#endif
-
-	_logger->info("success = {}, lastError = 0x{:08X}, bytesTransferred = {}, path = {}",
-		ret ? "true" : "false",
-		ret ? ERROR_SUCCESS : error,
-		tmpBytesTransferred,
-		path
-	);
-	
-	return ret;
-}
-
 
 
 
