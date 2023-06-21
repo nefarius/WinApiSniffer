@@ -672,29 +672,29 @@ EXTERN_C __declspec(selectany) const GUID Nefarius_Utilities_WinApiSniffer = {0x
 //
 // Channel
 //
-#define WinApiCalls 0x10
-#define WinApiCalls_KEYWORD 0x8000000000000000
+#define Nefarius_Utilities_WinApiSniffer_CHANNEL_TraceLogging 0xb
+#define Nefarius_Utilities_WinApiSniffer_CHANNEL_TraceLogging_KEYWORD 0x8000000000000000
 
 //
 // Event Descriptors
 //
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileA = {0x1, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileA = {0x1, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCreateFileA_value 0x1
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileW = {0x2, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCreateFileW = {0x2, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCreateFileW_value 0x2
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureReadFile = {0x3, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureReadFile = {0x3, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureReadFile_value 0x3
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureWriteFile = {0x4, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureWriteFile = {0x4, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureWriteFile_value 0x4
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureSetupDiEnumDeviceInterfaces = {0x5, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureSetupDiEnumDeviceInterfaces = {0x5, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureSetupDiEnumDeviceInterfaces_value 0x5
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCloseHandle = {0x6, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureCloseHandle = {0x6, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureCloseHandle_value 0x6
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureGetOverlappedResult = {0x7, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureGetOverlappedResult = {0x7, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureGetOverlappedResult_value 0x7
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDeviceIoControl = {0x8, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDeviceIoControl = {0x8, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureDeviceIoControl_value 0x8
-EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDiInstallDevice = {0x9, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDiInstallDevice = {0x9, 0x0, 0xb, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureDiInstallDevice_value 0x9
 
 //
@@ -1366,6 +1366,7 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 
 #define MSG_opcode_Info                      0x30000000L
 #define MSG_level_Informational              0x50000004L
+#define MSG_channel_TraceLogging             0x90000001L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_1_message 0xB0000001L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_2_message 0xB0000002L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_3_message 0xB0000003L
