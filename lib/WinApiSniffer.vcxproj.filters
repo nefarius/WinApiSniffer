@@ -68,7 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
-    <None Include="WinApiSnifferETW.man" />
+    <None Include="WinApiSnifferETW.man">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WinApiSnifferETW.rc">
