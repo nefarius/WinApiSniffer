@@ -155,8 +155,6 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 			set_default_logger(logger);
 
-			logger->info("Loading IOCTL definitions");
-
 			//
 			// Load known IOCTL code definitions
 			// 
@@ -168,8 +166,6 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 			{
 				g_ioctlMap[std::stoul(i["HexValue"].asString(), nullptr, 16)] = i["Ioctl"].asString();
 			}
-
-			logger->info("Done loading IOCTL definitions");
 
 			// Get available drive names
 			std::vector<WCHAR> buffer(GetLogicalDriveStringsW(0, nullptr));
@@ -188,6 +184,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 					break;
 	
 				std::string drive(strconverter.to_bytes(data));
+				logger->info("Adding {} to exceptions", drive);
 				g_driveStrings.push_back(drive);
 				offset += drive.length() + 1;
 			}
@@ -211,6 +208,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourAttach((PVOID*)&real_CloseHandle, DetourCloseHandle);
 		DetourAttach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourAttach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
+		DetourAttach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
 		DetourTransactionCommit();
 
 		break;
@@ -231,6 +229,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourDetach((PVOID*)&real_CloseHandle, DetourCloseHandle);
 		DetourDetach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourDetach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
+		DetourDetach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
 		DetourTransactionCommit();
 
 		if (!g_newIoctls.empty())
