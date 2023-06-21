@@ -2,6 +2,7 @@
 #include "DetourDeviceIoControl.h"
 #include "DetourFileApi.h"
 #include "DetourSetupApi.h"
+#include "DetourNewDev.h"
 
 
 using convert_t = std::codecvt_utf8<wchar_t>;
@@ -209,6 +210,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourAttach((PVOID*)&real_WriteFile, DetourWriteFile);
 		DetourAttach((PVOID*)&real_CloseHandle, DetourCloseHandle);
 		DetourAttach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
+		DetourAttach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 		DetourTransactionCommit();
 
 		break;
@@ -228,6 +230,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourDetach((PVOID*)&real_WriteFile, DetourWriteFile);
 		DetourDetach((PVOID*)&real_CloseHandle, DetourCloseHandle);
 		DetourDetach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
+		DetourDetach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 		DetourTransactionCommit();
 
 		if (!g_newIoctls.empty())

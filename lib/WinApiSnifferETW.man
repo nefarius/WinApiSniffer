@@ -12,6 +12,7 @@
 					<event symbol="CaptureCloseHandle" value="6" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCloseHandle" message="$(string.Nefarius-Utilities-WinApiSniffer.event.6.message)"></event>
 					<event symbol="CaptureGetOverlappedResult" value="7" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplGetOverlappedResult" message="$(string.Nefarius-Utilities-WinApiSniffer.event.7.message)"></event>
 					<event symbol="CaptureDeviceIoControl" value="8" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplDeviceIoControl" message="$(string.Nefarius-Utilities-WinApiSniffer.event.8.message)"></event>
+					<event symbol="CaptureDiInstallDevice" value="9" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplDiInstallDevice" message="$(string.Nefarius-Utilities-WinApiSniffer.event.9.message)"></event>
 				</events>
 				<levels></levels>
 				<opcodes></opcodes>
@@ -74,6 +75,14 @@
 						<data name="OutBufferSize" inType="win:UInt32" outType="xs:unsignedInt"></data>
 						<data name="OutBuffer" inType="win:AnsiString" outType="xs:string"></data>
 					</template>
+					<template tid="TplDiInstallDevice">
+						<data name="Parent" inType="win:Pointer" outType="win:HexInt64"></data>
+						<data name="DeviceInfoSet" inType="win:Pointer" outType="win:HexInt64"></data>
+						<data name="DeviceInfoData" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="DriverInfoData" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="Flags" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="NeedReboot" inType="win:Boolean" outType="xs:boolean"></data>
+					</template>
 				</templates>
 			</provider>
 		</events>
@@ -83,6 +92,7 @@
 			<stringTable>
 				<string id="opcode.Info" value="Info"></string>
 				<string id="level.Informational" value="Information"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.9.message" value="DiInstallDevice: %1, %2, %3, %4, %5, %6"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.8.message" value="DeviceIoControl: %1, %2, %3, %4, %5, %6, %7, %8, %9"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.7.message" value="GetOverlappedResult: %1, %2, %3, %4, %5"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.6.message" value="CloseHandle: 1%, %2"></string>

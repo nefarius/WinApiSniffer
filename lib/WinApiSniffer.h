@@ -10,6 +10,7 @@
 #include <Shlwapi.h>
 #include <initguid.h>
 #include <winioctl.h>
+#include <newdev.h>
 #include "XUSB.h"
 #include "WinApiSnifferETW.h"
 

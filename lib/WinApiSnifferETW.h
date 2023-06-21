@@ -659,7 +659,7 @@ Remarks:
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Provider "Nefarius-Utilities-WinApiSniffer" event count 8
+// Provider "Nefarius-Utilities-WinApiSniffer" event count 9
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Provider GUID = dad3e83e-90de-43ad-94e5-96a2b68d84a5
@@ -694,6 +694,8 @@ EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureGetOverlappedResult
 #define CaptureGetOverlappedResult_value 0x7
 EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDeviceIoControl = {0x8, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
 #define CaptureDeviceIoControl_value 0x8
+EXTERN_C __declspec(selectany) const EVENT_DESCRIPTOR CaptureDiInstallDevice = {0x9, 0x0, 0x10, 0x4, 0x0, 0x0, 0x8000000000000000};
+#define CaptureDiInstallDevice_value 0x9
 
 //
 // MCGEN_DISABLE_PROVIDER_CODE_GENERATION macro:
@@ -1014,6 +1016,29 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 // This macro is for use by MC-generated code and should not be used directly.
 #define _mcgen_TEMPLATE_FOR_CaptureDeviceIoControl _mcgen_PASTE2(McTemplateU0qstqsqsqs_, MCGEN_EVENTWRITETRANSFER)
 
+//
+// Enablement check macro for event "CaptureDiInstallDevice"
+//
+#define EventEnabledCaptureDiInstallDevice() _mcgen_EVENT_BIT_SET(Nefarius_Utilities_WinApiSnifferEnableBits, 0)
+#define EventEnabledCaptureDiInstallDevice_ForContext(pContext) _mcgen_EVENT_BIT_SET(_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->EnableBits, 0)
+
+//
+// Event write macros for event "CaptureDiInstallDevice"
+//
+#define EventWriteCaptureDiInstallDevice(Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot) \
+        MCGEN_EVENT_ENABLED(CaptureDiInstallDevice) \
+        ? _mcgen_TEMPLATE_FOR_CaptureDiInstallDevice(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureDiInstallDevice, Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot) : 0
+#define EventWriteCaptureDiInstallDevice_AssumeEnabled(Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot) \
+        _mcgen_TEMPLATE_FOR_CaptureDiInstallDevice(&Nefarius_Utilities_WinApiSniffer_Context, &CaptureDiInstallDevice, Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot)
+#define EventWriteCaptureDiInstallDevice_ForContext(pContext, Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot) \
+        MCGEN_EVENT_ENABLED_FORCONTEXT(pContext, CaptureDiInstallDevice) \
+        ? _mcgen_TEMPLATE_FOR_CaptureDiInstallDevice(&(pContext)->Context, &CaptureDiInstallDevice, Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot) : 0
+#define EventWriteCaptureDiInstallDevice_ForContextAssumeEnabled(pContext, Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot) \
+        _mcgen_TEMPLATE_FOR_CaptureDiInstallDevice(&_mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(pContext)->Context, &CaptureDiInstallDevice, Parent, DeviceInfoSet, DeviceInfoData, DriverInfoData, Flags, NeedReboot)
+
+// This macro is for use by MC-generated code and should not be used directly.
+#define _mcgen_TEMPLATE_FOR_CaptureDiInstallDevice _mcgen_PASTE2(McTemplateU0ppssqt_, MCGEN_EVENTWRITETRANSFER)
+
 #endif // MCGEN_DISABLE_PROVIDER_CODE_GENERATION
 
 //
@@ -1026,6 +1051,49 @@ _mcgen_CheckContextType_Nefarius_Utilities_WinApiSniffer(_In_ McGenContext_Nefar
 //
 // Template Functions
 //
+
+//
+// Function for template "TplDiInstallDevice" (and possibly others).
+// This function is for use by MC-generated code and should not be used directly.
+//
+#ifndef McTemplateU0ppssqt_def
+#define McTemplateU0ppssqt_def
+ETW_INLINE
+ULONG
+_mcgen_PASTE2(McTemplateU0ppssqt_, MCGEN_EVENTWRITETRANSFER)(
+    _In_ PMCGEN_TRACE_CONTEXT Context,
+    _In_ PCEVENT_DESCRIPTOR Descriptor,
+    _In_opt_ const void*  _Arg0,
+    _In_opt_ const void*  _Arg1,
+    _In_opt_ PCSTR  _Arg2,
+    _In_opt_ PCSTR  _Arg3,
+    _In_ const unsigned int  _Arg4,
+    _In_ const signed int  _Arg5
+    )
+{
+#define McTemplateU0ppssqt_ARGCOUNT 6
+
+    EVENT_DATA_DESCRIPTOR EventData[McTemplateU0ppssqt_ARGCOUNT + 1];
+
+    EventDataDescCreate(&EventData[1],&_Arg0, sizeof(const void*)  );
+
+    EventDataDescCreate(&EventData[2],&_Arg1, sizeof(const void*)  );
+
+    EventDataDescCreate(&EventData[3],
+                        (_Arg2 != NULL) ? _Arg2 : "NULL",
+                        (_Arg2 != NULL) ? (ULONG)((strlen(_Arg2) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[4],
+                        (_Arg3 != NULL) ? _Arg3 : "NULL",
+                        (_Arg3 != NULL) ? (ULONG)((strlen(_Arg3) + 1) * sizeof(char)) : (ULONG)sizeof("NULL"));
+
+    EventDataDescCreate(&EventData[5],&_Arg4, sizeof(const unsigned int)  );
+
+    EventDataDescCreate(&EventData[6],&_Arg5, sizeof(const signed int)  );
+
+    return McGenEventWrite(Context, Descriptor, NULL, McTemplateU0ppssqt_ARGCOUNT + 1, EventData);
+}
+#endif // McTemplateU0ppssqt_def
 
 //
 // Function for template "TplCloseHandle" (and possibly others).
@@ -1306,3 +1374,4 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_6_message 0xB0000006L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_7_message 0xB0000007L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_8_message 0xB0000008L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_9_message 0xB0000009L
