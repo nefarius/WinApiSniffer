@@ -4,8 +4,8 @@
 		<events>
 			<provider name="Nefarius-Utilities-WinApiSniffer" guid="{DAD3E83E-90DE-43AD-94E5-96A2B68D84A5}" symbol="Nefarius_Utilities_WinApiSniffer" resourceFileName="WinApiSniffer.dll" messageFileName="WinApiSniffer.dll">
 				<events>
-					<event symbol="CaptureCreateFileA" value="1" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCreateFileA" message="$(string.CaptureCreateFileA.EventMessage)"></event>
-					<event symbol="CaptureCreateFileW" value="2" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TpCreateFileW" message="$(string.CaptureCreateFileW.EventMessage)"></event>
+					<event symbol="CaptureCreateFileA" value="1" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplCreateFileA" message="$(string.Nefarius-Utilities-WinApiSniffer.event.1.message)"></event>
+					<event symbol="CaptureCreateFileW" value="2" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TpCreateFileW" message="$(string.Nefarius-Utilities-WinApiSniffer.event.2.message)"></event>
 					<event symbol="CaptureReadFile" value="3" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplReadFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.3.message)"></event>
 					<event symbol="CaptureWriteFile" value="4" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplWriteFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.4.message)"></event>
 					<event symbol="CaptureSetupDiEnumDeviceInterfaces" value="5" version="0" channel="WinApiCalls" level="win:Informational" opcode="win:Info" template="TplSetupDiEnumDeviceInterfaces" message="$(string.Nefarius-Utilities-WinApiSniffer.event.5.message)"></event>
@@ -65,7 +65,7 @@
 					</template>
 					<template tid="TplDeviceIoControl">
 						<data name="IoControlCode" inType="win:UInt32" outType="xs:unsignedInt"></data>
-            <data name="IoControlCodeName" inType="win:AnsiString" outType="xs:string"></data>
+						<data name="IoControlCodeName" inType="win:AnsiString" outType="xs:string"></data>
 						<data name="Success" inType="win:Boolean" outType="xs:boolean"></data>
 						<data name="LastError" inType="win:UInt32" outType="win:Win32Error"></data>
 						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
@@ -73,7 +73,7 @@
 						<data name="InBuffer" inType="win:AnsiString" outType="xs:string"></data>
 						<data name="OutBufferSize" inType="win:UInt32" outType="xs:unsignedInt"></data>
 						<data name="OutBuffer" inType="win:AnsiString" outType="xs:string"></data>
-          </template>
+					</template>
 				</templates>
 			</provider>
 		</events>
@@ -83,14 +83,14 @@
 			<stringTable>
 				<string id="opcode.Info" value="Info"></string>
 				<string id="level.Informational" value="Information"></string>
-				<string id="Nefarius-Utilities-WinApiSniffer.event.8.message" value="%1"></string>
-				<string id="Nefarius-Utilities-WinApiSniffer.event.7.message" value="%1, %2, %3, %4"></string>
-				<string id="Nefarius-Utilities-WinApiSniffer.event.6.message" value="CloseHandle 1% %2"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.8.message" value="DeviceIoControl: %1, %2, %3, %4, %5, %6, %7, %8, %9"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.7.message" value="GetOverlappedResult: %1, %2, %3, %4, %5"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.6.message" value="CloseHandle: 1%, %2"></string>
 				<string id="Nefarius-Utilities-WinApiSniffer.event.5.message" value="SetupDiEnumDeviceInterfaces %1, %2, %3"></string>
-				<string id="Nefarius-Utilities-WinApiSniffer.event.4.message" value="WriteFile [HANDLE: %2] path -&gt; %1, error: %3"></string>
-				<string id="Nefarius-Utilities-WinApiSniffer.event.3.message" value="ReadFile [HANDLE: %2] path -&gt; %1, error: %3"></string>
-				<string id="CaptureCreateFileW.EventMessage" value="CreateFileW [HANDLE: %2] path -&gt; %1, error: %3"></string>
-				<string id="CaptureCreateFileA.EventMessage" value="CreateFileA [HANDLE: %2] path -&gt; %1, error: %3"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.4.message" value="WriteFile: %1, %2, %3, %4, %5, %6, %7"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.3.message" value="ReadFile: %1, %2, %3, %4, %5, %6, %7"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.2.message" value="CreateFileW [HANDLE: %2] path -&gt; %1, error: %3"></string>
+				<string id="Nefarius-Utilities-WinApiSniffer.event.1.message" value="CreateFileA [HANDLE: %2] path -&gt; %1, error: %3"></string>
 			</stringTable>
 		</resources>
 	</localization>
