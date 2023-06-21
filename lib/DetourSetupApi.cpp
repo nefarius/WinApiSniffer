@@ -4,6 +4,7 @@
 decltype(SetupDiEnumDeviceInterfaces)* real_SetupDiEnumDeviceInterfaces = SetupDiEnumDeviceInterfaces;
 decltype(SetupDiCreateDeviceInfoList)* real_SetupDiCreateDeviceInfoList = SetupDiCreateDeviceInfoList;
 decltype(SetupDiCallClassInstaller)* real_SetupDiCallClassInstaller = SetupDiCallClassInstaller;
+decltype(SetupDiSetDeviceRegistryPropertyW)* real_SetupDiSetDeviceRegistryPropertyW = SetupDiSetDeviceRegistryPropertyW;
 
 //
 // Hooks SetupDiEnumDeviceInterfaces() API
@@ -58,4 +59,27 @@ DetourSetupDiCallClassInstaller(
 	logger->info("DetourSetupDiCallClassInstaller called");
 
 	return real_SetupDiCallClassInstaller(InstallFunction, DeviceInfoSet, DeviceInfoData);
+}
+
+BOOL
+WINAPI
+DetourSetupDiSetDeviceRegistryPropertyW(
+	_In_ HDEVINFO DeviceInfoSet,
+	_Inout_ PSP_DEVINFO_DATA DeviceInfoData,
+	_In_ DWORD Property,
+	_In_reads_bytes_opt_(PropertyBufferSize) CONST BYTE* PropertyBuffer,
+	_In_ DWORD PropertyBufferSize
+)
+{
+	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
+
+	logger->info("DetourSetupDiSetDeviceRegistryPropertyW called");
+
+	return real_SetupDiSetDeviceRegistryPropertyW(
+		DeviceInfoSet,
+		DeviceInfoData,
+		Property,
+		PropertyBuffer,
+		PropertyBufferSize
+	);
 }

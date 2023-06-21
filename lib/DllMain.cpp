@@ -210,6 +210,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourAttach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 		DetourAttach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
 		DetourAttach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
+		DetourAttach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
 		DetourTransactionCommit();
 
 		break;
@@ -232,6 +233,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourDetach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 		DetourDetach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
 		DetourDetach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
+		DetourDetach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
 		DetourTransactionCommit();
 
 		if (!g_newIoctls.empty())
