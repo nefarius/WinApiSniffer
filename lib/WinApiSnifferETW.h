@@ -1298,8 +1298,8 @@ _mcgen_PASTE2(McTemplateU0zpq_, MCGEN_EVENTWRITETRANSFER)(
 
 #define MSG_opcode_Info                      0x30000000L
 #define MSG_level_Informational              0x50000004L
-#define MSG_CaptureCreateFileA_EventMessage  0xB0000001L
-#define MSG_CaptureCreateFileW_EventMessage  0xB0000002L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_1_message 0xB0000001L
+#define MSG_Nefarius_Utilities_WinApiSniffer_event_2_message 0xB0000002L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_3_message 0xB0000003L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_4_message 0xB0000004L
 #define MSG_Nefarius_Utilities_WinApiSniffer_event_5_message 0xB0000005L
