@@ -6,6 +6,7 @@ decltype(SetupDiCreateDeviceInfoList)* real_SetupDiCreateDeviceInfoList = SetupD
 decltype(SetupDiCallClassInstaller)* real_SetupDiCallClassInstaller = SetupDiCallClassInstaller;
 decltype(SetupDiSetDeviceRegistryPropertyW)* real_SetupDiSetDeviceRegistryPropertyW = SetupDiSetDeviceRegistryPropertyW;
 decltype(SetupDiSetClassInstallParamsW)* real_SetupDiSetClassInstallParamsW = SetupDiSetClassInstallParamsW;
+decltype(SetupDiOpenDevRegKey)* real_SetupDiOpenDevRegKey = SetupDiOpenDevRegKey;
 
 //
 // Hooks SetupDiEnumDeviceInterfaces() API
@@ -103,5 +104,26 @@ DetourSetupDiSetClassInstallParamsW(
 		DeviceInfoData,
 		ClassInstallParams,
 		ClassInstallParamsSize
+	);
+}
+
+HKEY
+WINAPI
+DetourSetupDiOpenDevRegKey(
+	_In_ HDEVINFO DeviceInfoSet,
+	_In_ PSP_DEVINFO_DATA DeviceInfoData,
+	_In_ DWORD Scope,
+	_In_ DWORD HwProfile,
+	_In_ DWORD KeyType,
+	_In_ REGSAM samDesired
+)
+{
+	return real_SetupDiOpenDevRegKey(
+		DeviceInfoSet,
+		DeviceInfoData,
+		Scope,
+		HwProfile,
+		KeyType,
+		samDesired
 	);
 }
