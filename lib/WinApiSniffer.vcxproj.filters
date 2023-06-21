@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="SetupApi">
+      <UniqueIdentifier>{2b6a4e2a-ae34-4686-8943-199fca59480f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FileApi">
+      <UniqueIdentifier>{31b08938-87ef-4852-a1e0-9e6bb70cda9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DeviceIoControl">
+      <UniqueIdentifier>{87c61f40-5bff-4529-9503-a410a67e665d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewDev">
+      <UniqueIdentifier>{57e605b8-2c0d-47e3-ac69-2fdf9f32dcbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="XUSB.h">
@@ -21,13 +33,46 @@
     <ClInclude Include="WinApiSniffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WinApiSnifferETW.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DetourSetupApi.h">
+      <Filter>SetupApi</Filter>
+    </ClInclude>
+    <ClInclude Include="DetourFileApi.h">
+      <Filter>FileApi</Filter>
+    </ClInclude>
+    <ClInclude Include="DetourDeviceIoControl.h">
+      <Filter>DeviceIoControl</Filter>
+    </ClInclude>
+    <ClInclude Include="DetourNewDev.h">
+      <Filter>NewDev</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="DllMain.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DetourSetupApi.cpp">
+      <Filter>SetupApi</Filter>
+    </ClCompile>
+    <ClCompile Include="DetourFileApi.cpp">
+      <Filter>FileApi</Filter>
+    </ClCompile>
+    <ClCompile Include="DetourDeviceIoControl.cpp">
+      <Filter>DeviceIoControl</Filter>
+    </ClCompile>
+    <ClCompile Include="DetourNewDev.cpp">
+      <Filter>NewDev</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
+    <None Include="WinApiSnifferETW.man" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="WinApiSnifferETW.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
