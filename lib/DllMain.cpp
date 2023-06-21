@@ -209,6 +209,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourAttach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourAttach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 		DetourAttach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
+		DetourAttach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
 		DetourTransactionCommit();
 
 		break;
@@ -230,6 +231,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourDetach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourDetach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 		DetourDetach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
+		DetourDetach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
 		DetourTransactionCommit();
 
 		if (!g_newIoctls.empty())

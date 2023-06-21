@@ -2,6 +2,7 @@
 
 extern decltype(SetupDiEnumDeviceInterfaces)* real_SetupDiEnumDeviceInterfaces;
 extern decltype(SetupDiCreateDeviceInfoList)* real_SetupDiCreateDeviceInfoList;
+extern decltype(SetupDiCallClassInstaller)* real_SetupDiCallClassInstaller;
 
 BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 	HDEVINFO DeviceInfoSet,
@@ -14,4 +15,12 @@ BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 HDEVINFO WINAPI DetourSetupDiCreateDeviceInfoList(
 	const GUID* ClassGuid,
 	HWND       hwndParent
+);
+
+BOOL
+WINAPI
+DetourSetupDiCallClassInstaller(
+	_In_ DI_FUNCTION InstallFunction,
+	_In_ HDEVINFO DeviceInfoSet,
+	_In_opt_ PSP_DEVINFO_DATA DeviceInfoData
 );
