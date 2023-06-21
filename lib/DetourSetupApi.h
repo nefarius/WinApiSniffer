@@ -4,6 +4,7 @@ extern decltype(SetupDiEnumDeviceInterfaces)* real_SetupDiEnumDeviceInterfaces;
 extern decltype(SetupDiCreateDeviceInfoList)* real_SetupDiCreateDeviceInfoList;
 extern decltype(SetupDiCallClassInstaller)* real_SetupDiCallClassInstaller;
 extern decltype(SetupDiSetDeviceRegistryPropertyW)* real_SetupDiSetDeviceRegistryPropertyW;
+extern decltype(SetupDiSetClassInstallParamsW)* real_SetupDiSetClassInstallParamsW;
 
 BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 	HDEVINFO DeviceInfoSet,
@@ -34,4 +35,13 @@ DetourSetupDiSetDeviceRegistryPropertyW(
 	_In_ DWORD Property,
 	_In_reads_bytes_opt_(PropertyBufferSize) CONST BYTE* PropertyBuffer,
 	_In_ DWORD PropertyBufferSize
+);
+
+BOOL
+WINAPI
+DetourSetupDiSetClassInstallParamsW(
+	_In_ HDEVINFO DeviceInfoSet,
+	_In_opt_ PSP_DEVINFO_DATA DeviceInfoData,
+	_In_reads_bytes_opt_(ClassInstallParamsSize) PSP_CLASSINSTALL_HEADER ClassInstallParams,
+	_In_ DWORD ClassInstallParamsSize
 );
