@@ -4,15 +4,15 @@
 		<events>
 			<provider name="Nefarius-Utilities-WinApiSniffer" guid="{DAD3E83E-90DE-43AD-94E5-96A2B68D84A5}" symbol="Nefarius_Utilities_WinApiSniffer" resourceFileName="WinApiSniffer.dll" messageFileName="WinApiSniffer.dll">
 				<events>
-					<event symbol="CaptureCreateFileA" value="1" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplCreateFileA" message="$(string.Nefarius-Utilities-WinApiSniffer.event.1.message)"></event>
-					<event symbol="CaptureCreateFileW" value="2" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TpCreateFileW" message="$(string.Nefarius-Utilities-WinApiSniffer.event.2.message)"></event>
-					<event symbol="CaptureReadFile" value="3" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplReadFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.3.message)"></event>
-					<event symbol="CaptureWriteFile" value="4" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplWriteFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.4.message)"></event>
-					<event symbol="CaptureSetupDiEnumDeviceInterfaces" value="5" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplSetupDiEnumDeviceInterfaces" message="$(string.Nefarius-Utilities-WinApiSniffer.event.5.message)"></event>
-					<event symbol="CaptureCloseHandle" value="6" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplCloseHandle" message="$(string.Nefarius-Utilities-WinApiSniffer.event.6.message)"></event>
-					<event symbol="CaptureGetOverlappedResult" value="7" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplGetOverlappedResult" message="$(string.Nefarius-Utilities-WinApiSniffer.event.7.message)"></event>
-					<event symbol="CaptureDeviceIoControl" value="8" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplDeviceIoControl" message="$(string.Nefarius-Utilities-WinApiSniffer.event.8.message)"></event>
-					<event symbol="CaptureDiInstallDevice" value="9" version="0" channel="TraceLogging" level="win:Informational" opcode="win:Info" template="TplDiInstallDevice" message="$(string.Nefarius-Utilities-WinApiSniffer.event.9.message)"></event>
+					<event symbol="CaptureCreateFileA" value="1" version="0" level="win:Informational" opcode="win:Info" template="TplCreateFileA" message="$(string.Nefarius-Utilities-WinApiSniffer.event.1.message)"></event>
+					<event symbol="CaptureCreateFileW" value="2" version="0" level="win:Informational" opcode="win:Info" template="TpCreateFileW" message="$(string.Nefarius-Utilities-WinApiSniffer.event.2.message)"></event>
+					<event symbol="CaptureReadFile" value="3" version="0" level="win:Informational" opcode="win:Info" template="TplReadFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.3.message)"></event>
+					<event symbol="CaptureWriteFile" value="4" version="0" level="win:Informational" opcode="win:Info" template="TplWriteFile" message="$(string.Nefarius-Utilities-WinApiSniffer.event.4.message)"></event>
+					<event symbol="CaptureSetupDiEnumDeviceInterfaces" value="5" version="0" level="win:Informational" opcode="win:Info" template="TplSetupDiEnumDeviceInterfaces" message="$(string.Nefarius-Utilities-WinApiSniffer.event.5.message)"></event>
+					<event symbol="CaptureCloseHandle" value="6" version="0" level="win:Informational" opcode="win:Info" template="TplCloseHandle" message="$(string.Nefarius-Utilities-WinApiSniffer.event.6.message)"></event>
+					<event symbol="CaptureGetOverlappedResult" value="7" version="0" level="win:Informational" opcode="win:Info" template="TplGetOverlappedResult" message="$(string.Nefarius-Utilities-WinApiSniffer.event.7.message)"></event>
+					<event symbol="CaptureDeviceIoControl" value="8" version="0" level="win:Informational" opcode="win:Info" template="TplDeviceIoControl" message="$(string.Nefarius-Utilities-WinApiSniffer.event.8.message)"></event>
+					<event symbol="CaptureDiInstallDevice" value="9" version="0" level="win:Informational" opcode="win:Info" template="TplDiInstallDevice" message="$(string.Nefarius-Utilities-WinApiSniffer.event.9.message)"></event>
 				</events>
 				<levels></levels>
 				<opcodes></opcodes>
@@ -65,7 +65,7 @@
 						<data name="Path" inType="win:AnsiString" outType="xs:string"></data>
 					</template>
 					<template tid="TplDeviceIoControl">
-						<data name="IoControlCode" inType="win:UInt32" outType="xs:unsignedInt"></data>
+						<data name="IoControlCode" inType="win:UInt32" outType="win:HexInt32"></data>
 						<data name="IoControlCodeName" inType="win:AnsiString" outType="xs:string"></data>
 						<data name="Success" inType="win:Boolean" outType="xs:boolean"></data>
 						<data name="LastError" inType="win:UInt32" outType="win:Win32Error"></data>
