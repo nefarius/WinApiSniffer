@@ -222,7 +222,7 @@ BOOL WINAPI DetourWriteFile(
 	return ret;
 }
 
-BOOL DetourCloseHandle(
+BOOL WINAPI DetourCloseHandle(
 	HANDLE hObject
 )
 {

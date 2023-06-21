@@ -1,4 +1,4 @@
-#include "WINAPISNIFFER.h"
+#include "WinApiSniffer.h"
 #include "DetourDeviceIoControl.h"
 #include "DetourFileApi.h"
 #include "DetourSetupApi.h"
@@ -19,16 +19,12 @@ struct ReadFileExDetourParams
 };
 
 static decltype(ReadFileEx)* real_ReadFileEx = ReadFileEx;
-static decltype(CloseHandle)* real_CloseHandle = CloseHandle;
-
 
 std::list<std::string> g_driveStrings;
 std::map<HANDLE, std::string> g_handleToPath;
 static std::map<LPOVERLAPPED, ReadFileExDetourParams> g_overlappedToRoutine;
 std::map<DWORD, std::string> g_ioctlMap;
 std::map<DWORD, bool> g_newIoctls;
-
-
 
 
 void CALLBACK ReadFileExCallback(
@@ -159,6 +155,8 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 			set_default_logger(logger);
 
+			logger->info("Loading IOCTL definitions");
+
 			//
 			// Load known IOCTL code definitions
 			// 
@@ -170,6 +168,8 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 			{
 				g_ioctlMap[std::stoul(i["HexValue"].asString(), nullptr, 16)] = i["Ioctl"].asString();
 			}
+
+			logger->info("Done loading IOCTL definitions");
 
 			// Get available drive names
 			std::vector<WCHAR> buffer(GetLogicalDriveStringsW(0, nullptr));
@@ -195,7 +195,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 			// Also exclude named pipes
 			g_driveStrings.emplace_back("pipe\\");
 		}
-
+				
 		DisableThreadLibraryCalls(dll_handle);
 		DetourRestoreAfterWith();
 
