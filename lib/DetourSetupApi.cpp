@@ -11,6 +11,8 @@ decltype(SetupDiSetDeviceRegistryPropertyW)* real_SetupDiSetDeviceRegistryProper
 decltype(SetupDiSetClassInstallParamsW)* real_SetupDiSetClassInstallParamsW = SetupDiSetClassInstallParamsW;
 decltype(SetupDiOpenDevRegKey)* real_SetupDiOpenDevRegKey = SetupDiOpenDevRegKey;
 decltype(SetupDiEnumDriverInfoW)* real_SetupDiEnumDriverInfoW = SetupDiEnumDriverInfoW;
+decltype(SetupOpenInfFileW)* real_SetupOpenInfFileW = SetupOpenInfFileW;
+decltype(SetupFindFirstLineW)* real_SetupFindFirstLineW = SetupFindFirstLineW;
 
 //
 // Hooks SetupDiEnumDeviceInterfaces() API
@@ -175,5 +177,61 @@ DetourSetupDiEnumDriverInfoW(
 		DriverType,
 		MemberIndex,
 		DriverInfoData
+	);
+}
+
+HINF
+WINAPI
+DetourSetupOpenInfFileW(
+	_In_ PCWSTR FileName,
+	_In_opt_ PCWSTR InfClass,
+	_In_ DWORD InfStyle,
+	_Out_opt_ PUINT ErrorLine
+)
+{
+	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
+
+	logger->info("DetourSetupOpenInfFileW called");
+
+	if (FileName)
+	{
+		const std::string fileName(strconverter.to_bytes(FileName));
+
+		logger->info("FileName = {}", fileName);
+	}
+
+	return real_SetupOpenInfFileW(
+		FileName,
+		InfClass,
+		InfStyle,
+		ErrorLine
+	);
+}
+
+BOOL
+WINAPI
+DetourSetupFindFirstLineW(
+	_In_ HINF InfHandle,
+	_In_ PCWSTR Section,
+	_In_opt_ PCWSTR Key,
+	_Out_ PINFCONTEXT Context
+)
+{
+	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
+
+	logger->info("DetourSetupOpenInfFileW called");
+
+	const std::string section(strconverter.to_bytes(Section));
+	const std::string key(strconverter.to_bytes(Key));
+
+	logger->info("Section = {}, Key = {}",
+		section, key
+	);
+
+	return real_SetupFindFirstLineW(
+		InfHandle,
+		Section,
+		Key,
+		Context
 	);
 }
