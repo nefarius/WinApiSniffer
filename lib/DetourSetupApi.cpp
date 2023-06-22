@@ -191,14 +191,9 @@ DetourSetupOpenInfFileW(
 {
 	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
 
-	logger->info("DetourSetupOpenInfFileW called");
+	const std::string fileName(strconverter.to_bytes(FileName));
 
-	if (FileName)
-	{
-		const std::string fileName(strconverter.to_bytes(FileName));
-
-		logger->info("FileName = {}", fileName);
-	}
+	logger->info("FileName = {}", fileName);
 
 	return real_SetupOpenInfFileW(
 		FileName,
@@ -218,8 +213,6 @@ DetourSetupFindFirstLineW(
 )
 {
 	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
-
-	logger->info("DetourSetupOpenInfFileW called");
 
 	const std::string section(strconverter.to_bytes(Section));
 	const std::string key(strconverter.to_bytes(Key));
