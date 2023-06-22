@@ -198,7 +198,6 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 
 		DetourTransactionBegin();
 		DetourUpdateThread(GetCurrentThread());
-		DetourAttach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
 		DetourAttach((PVOID*)&real_DeviceIoControl, DetourDeviceIoControl);
 		DetourAttach((PVOID*)&real_CreateFileA, DetourCreateFileA);
 		DetourAttach((PVOID*)&real_CreateFileW, DetourCreateFileW);
@@ -208,11 +207,14 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourAttach((PVOID*)&real_CloseHandle, DetourCloseHandle);
 		DetourAttach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourAttach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
+
+		DetourAttach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
 		DetourAttach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
 		DetourAttach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
 		DetourAttach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
 		DetourAttach((PVOID*)&real_SetupDiSetClassInstallParamsW, DetourSetupDiSetClassInstallParamsW);
 		DetourAttach((PVOID*)&real_SetupDiOpenDevRegKey, DetourSetupDiOpenDevRegKey);
+		DetourAttach((PVOID*)&real_SetupDiEnumDriverInfoW, DetourSetupDiEnumDriverInfoW);
 		DetourTransactionCommit();
 
 		break;
@@ -222,8 +224,7 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		EventUnregisterNefarius_Utilities_WinApiSniffer();
 
 		DetourTransactionBegin();
-		DetourUpdateThread(GetCurrentThread());
-		DetourDetach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
+		DetourUpdateThread(GetCurrentThread());		
 		DetourDetach((PVOID*)&real_DeviceIoControl, DetourDeviceIoControl);
 		DetourDetach((PVOID*)&real_CreateFileA, DetourCreateFileA);
 		DetourDetach((PVOID*)&real_CreateFileW, DetourCreateFileW);
@@ -233,11 +234,14 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourDetach((PVOID*)&real_CloseHandle, DetourCloseHandle);
 		DetourDetach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourDetach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
+
+		DetourDetach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
 		DetourDetach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
 		DetourDetach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
 		DetourDetach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
 		DetourDetach((PVOID*)&real_SetupDiSetClassInstallParamsW, DetourSetupDiSetClassInstallParamsW);
 		DetourDetach((PVOID*)&real_SetupDiOpenDevRegKey, DetourSetupDiOpenDevRegKey);
+		DetourDetach((PVOID*)&real_SetupDiEnumDriverInfoW, DetourSetupDiEnumDriverInfoW);
 		DetourTransactionCommit();
 
 		if (!g_newIoctls.empty())

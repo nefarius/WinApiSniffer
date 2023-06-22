@@ -1,12 +1,16 @@
 #include "WinApiSniffer.h"
 #include "DetourSetupApi.h"
 
+using convert_t = std::codecvt_utf8<wchar_t>;
+static std::wstring_convert<convert_t, wchar_t> strconverter;
+
 decltype(SetupDiEnumDeviceInterfaces)* real_SetupDiEnumDeviceInterfaces = SetupDiEnumDeviceInterfaces;
 decltype(SetupDiCreateDeviceInfoList)* real_SetupDiCreateDeviceInfoList = SetupDiCreateDeviceInfoList;
 decltype(SetupDiCallClassInstaller)* real_SetupDiCallClassInstaller = SetupDiCallClassInstaller;
 decltype(SetupDiSetDeviceRegistryPropertyW)* real_SetupDiSetDeviceRegistryPropertyW = SetupDiSetDeviceRegistryPropertyW;
 decltype(SetupDiSetClassInstallParamsW)* real_SetupDiSetClassInstallParamsW = SetupDiSetClassInstallParamsW;
 decltype(SetupDiOpenDevRegKey)* real_SetupDiOpenDevRegKey = SetupDiOpenDevRegKey;
+decltype(SetupDiEnumDriverInfoW)* real_SetupDiEnumDriverInfoW = SetupDiEnumDriverInfoW;
 
 //
 // Hooks SetupDiEnumDeviceInterfaces() API
@@ -19,10 +23,6 @@ BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 	PSP_DEVICE_INTERFACE_DATA DeviceInterfaceData
 )
 {
-	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
-
-	logger->info("DetourSetupDiEnumDeviceInterfaces called");
-
 	const auto retval = real_SetupDiEnumDeviceInterfaces(
 		DeviceInfoSet,
 		DeviceInfoData,
@@ -31,7 +31,7 @@ BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 		DeviceInterfaceData
 	);
 
-	EventWriteCaptureSetupDiEnumDeviceInterfaces(retval, GetLastError(), InterfaceClassGuid);
+	//EventWriteCaptureSetupDiEnumDeviceInterfaces(retval, GetLastError(), InterfaceClassGuid);
 
 	return retval;
 }
@@ -125,5 +125,55 @@ DetourSetupDiOpenDevRegKey(
 		HwProfile,
 		KeyType,
 		samDesired
+	);
+}
+
+BOOL
+WINAPI
+DetourSetupDiEnumDriverInfoW(
+	_In_ HDEVINFO DeviceInfoSet,
+	_In_opt_ PSP_DEVINFO_DATA DeviceInfoData,
+	_In_ DWORD DriverType,
+	_In_ DWORD MemberIndex,
+	_Out_ PSP_DRVINFO_DATA_W DriverInfoData
+)
+{
+	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
+
+	logger->info("DetourSetupDiEnumDriverInfoW called");
+
+	// TODO: port me to ETW!
+
+	if (DriverInfoData)
+	{
+		const std::string description(strconverter.to_bytes(DriverInfoData->Description));
+		const std::string mfgName(strconverter.to_bytes(DriverInfoData->MfgName));
+		const std::string providerName(strconverter.to_bytes(DriverInfoData->ProviderName));
+
+		logger->info("DriverType = 0x{:08X}, MemberIndex = 0x{:08X}, DriverInfoData->DriverType = 0x{:08X}, DriverInfoData->Description = {}, DriverInfoData->MfgName = {}, DriverInfoData->ProviderName = {}",
+			DriverType,
+			MemberIndex,
+			DriverInfoData->DriverType,
+			description,
+			mfgName,
+			providerName
+		);
+
+		/*
+		const PUCHAR asBuffer = PUCHAR(DriverInfoData);
+		const std::vector<char> buffer(asBuffer, asBuffer + DriverInfoData->cbSize);
+
+		logger->info("DriverInfoData = {:Xpn}",
+			spdlog::to_hex(buffer)
+		);
+		*/
+	}
+
+	return real_SetupDiEnumDriverInfoW(
+		DeviceInfoSet,
+		DeviceInfoData,
+		DriverType,
+		MemberIndex,
+		DriverInfoData
 	);
 }
