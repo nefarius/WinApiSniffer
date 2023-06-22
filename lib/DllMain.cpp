@@ -208,12 +208,12 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourAttach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourAttach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 
-		DetourAttach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
-		DetourAttach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
-		DetourAttach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
-		DetourAttach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
-		DetourAttach((PVOID*)&real_SetupDiSetClassInstallParamsW, DetourSetupDiSetClassInstallParamsW);
-		DetourAttach((PVOID*)&real_SetupDiOpenDevRegKey, DetourSetupDiOpenDevRegKey);
+		//DetourAttach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
+		//DetourAttach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
+		//DetourAttach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
+		//DetourAttach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
+		//DetourAttach((PVOID*)&real_SetupDiSetClassInstallParamsW, DetourSetupDiSetClassInstallParamsW);
+		//DetourAttach((PVOID*)&real_SetupDiOpenDevRegKey, DetourSetupDiOpenDevRegKey);
 		DetourAttach((PVOID*)&real_SetupDiEnumDriverInfoW, DetourSetupDiEnumDriverInfoW);
 		DetourTransactionCommit();
 
@@ -235,12 +235,12 @@ BOOL WINAPI DllMain(HINSTANCE dll_handle, DWORD reason, LPVOID reserved)
 		DetourDetach((PVOID*)&real_GetOverlappedResult, DetourGetOverlappedResult);
 		DetourDetach((PVOID*)&real_DiInstallDevice, DetourDiInstallDevice);
 
-		DetourDetach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
-		DetourDetach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
-		DetourDetach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
-		DetourDetach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
-		DetourDetach((PVOID*)&real_SetupDiSetClassInstallParamsW, DetourSetupDiSetClassInstallParamsW);
-		DetourDetach((PVOID*)&real_SetupDiOpenDevRegKey, DetourSetupDiOpenDevRegKey);
+		//DetourDetach((PVOID*)&real_SetupDiEnumDeviceInterfaces, DetourSetupDiEnumDeviceInterfaces);
+		//DetourDetach((PVOID*)&real_SetupDiCreateDeviceInfoList, DetourSetupDiEnumDeviceInterfaces);
+		//DetourDetach((PVOID*)&real_SetupDiCallClassInstaller, DetourSetupDiCallClassInstaller);
+		//DetourDetach((PVOID*)&real_SetupDiSetDeviceRegistryPropertyW, DetourSetupDiSetDeviceRegistryPropertyW);
+		//DetourDetach((PVOID*)&real_SetupDiSetClassInstallParamsW, DetourSetupDiSetClassInstallParamsW);
+		//DetourDetach((PVOID*)&real_SetupDiOpenDevRegKey, DetourSetupDiOpenDevRegKey);
 		DetourDetach((PVOID*)&real_SetupDiEnumDriverInfoW, DetourSetupDiEnumDriverInfoW);
 		DetourTransactionCommit();
 

@@ -14,6 +14,10 @@ DetourDiInstallDevice(
 	_Out_opt_ PBOOL NeedReboot
 )
 {
+	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
+
+	logger->info("DetourDiInstallDevice called");
+
 	const auto retval = real_DiInstallDevice(
 		hwndParent,
 		DeviceInfoSet,
