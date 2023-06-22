@@ -9,6 +9,7 @@ extern decltype(SetupDiOpenDevRegKey)* real_SetupDiOpenDevRegKey;
 extern decltype(SetupDiEnumDriverInfoW)* real_SetupDiEnumDriverInfoW;
 extern decltype(SetupOpenInfFileW)* real_SetupOpenInfFileW;
 extern decltype(SetupFindFirstLineW)* real_SetupFindFirstLineW;
+extern decltype(SetupDiSetDeviceInstallParamsW)* real_SetupDiSetDeviceInstallParamsW;
 
 BOOL WINAPI DetourSetupDiEnumDeviceInterfaces(
 	HDEVINFO DeviceInfoSet,
@@ -87,4 +88,12 @@ DetourSetupFindFirstLineW(
 	_In_ PCWSTR Section,
 	_In_opt_ PCWSTR Key,
 	_Out_ PINFCONTEXT Context
+);
+
+BOOL
+WINAPI
+DetourSetupDiSetDeviceInstallParamsW(
+	_In_ HDEVINFO DeviceInfoSet,
+	_In_opt_ PSP_DEVINFO_DATA DeviceInfoData,
+	_In_ PSP_DEVINSTALL_PARAMS_W DeviceInstallParams
 );

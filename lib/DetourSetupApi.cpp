@@ -13,6 +13,7 @@ decltype(SetupDiOpenDevRegKey)* real_SetupDiOpenDevRegKey = SetupDiOpenDevRegKey
 decltype(SetupDiEnumDriverInfoW)* real_SetupDiEnumDriverInfoW = SetupDiEnumDriverInfoW;
 decltype(SetupOpenInfFileW)* real_SetupOpenInfFileW = SetupOpenInfFileW;
 decltype(SetupFindFirstLineW)* real_SetupFindFirstLineW = SetupFindFirstLineW;
+decltype(SetupDiSetDeviceInstallParamsW)* real_SetupDiSetDeviceInstallParamsW = SetupDiSetDeviceInstallParamsW;
 
 //
 // Hooks SetupDiEnumDeviceInterfaces() API
@@ -226,5 +227,33 @@ DetourSetupFindFirstLineW(
 		Section,
 		Key,
 		Context
+	);
+}
+
+BOOL
+WINAPI
+DetourSetupDiSetDeviceInstallParamsW(
+	_In_ HDEVINFO DeviceInfoSet,
+	_In_opt_ PSP_DEVINFO_DATA DeviceInfoData,
+	_In_ PSP_DEVINSTALL_PARAMS_W DeviceInstallParams
+)
+{
+	const std::shared_ptr<spdlog::logger> logger = spdlog::get("WinApiSniffer")->clone(__FUNCTION__);
+
+	if (DeviceInstallParams)
+	{
+		DWORD flags = DeviceInstallParams->Flags;
+		DWORD flagsEx = DeviceInstallParams->FlagsEx;
+		const std::string driverPath(strconverter.to_bytes(DeviceInstallParams->DriverPath));
+
+		logger->info("Flags = 0x{:08X}, FlagsEx = 0x{:08X}, DriverPath = {}",
+			flags, flagsEx, driverPath
+		);
+	}
+
+	return real_SetupDiSetDeviceInstallParamsW(
+		DeviceInfoSet,
+		DeviceInfoData,
+		DeviceInstallParams
 	);
 }
